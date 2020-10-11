@@ -15,32 +15,7 @@
     </style>
   </head>
   <body>
-    <video controls width="500" id="video">
-      <source
-        src="https://embedwistia-a.akamaihd.net/deliveries/aff5dbbb15cde4c917a1094efabe69a97ddb7d8b/Hackathon.mp4"
-        type="video/mp4"
-      />
-
-      Sorry, your browser doesn't support embedded videos.
-    </video>
-
-    <div>
-      <button id="open-scale-btn">Scale...</button>
-    </div>
-
-    <div class="hidden" id="scale-control">
-      <h2>Scale</h2>
-      <div class="radio-group">
-        <input type="radio" name="amount" value="50" id="scale-50-percent" />
-        <label for="scale-50-percent">50%</label>
-
-        <input type="radio" name="amount" value="150" id="scale-150-percent" />
-        <label for="scale-150-percent">150%</label>
-
-        <button class="apply">Apply</button>
-      </div>
-    </div>
-
+    <div id="app"></div>
     <script src="bundle.js"></script>
   </body>
 </html>

@@ -1,12 +1,11 @@
 import "./style.css"
-import scaleControl from "./scaleControl"
+import { state } from "./state"
+import React from "react"
+import ReactDOM from "react-dom"
+import VideoEditor from "./components/VideoEditor"
 
-const context = { edits: [], video: null }
+ReactDOM.render(<VideoEditor />, document.getElementById("app"))
+module.hot.accept()
+
+const context = { edits: state.edits, video: null }
 window.appContext = context
-
-document.addEventListener("DOMContentLoaded", function () {
-  const video = document.getElementById("video")
-  context.video = video
-  const btn = document.getElementById("open-scale-btn")
-  btn.addEventListener("click", () => scaleControl(context))
-})
