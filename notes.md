@@ -47,11 +47,15 @@ open index.html
 
 ## Edit Points Format
 
-An edit point will consist of a "command" and "arguments", much like a function call or
-a shell command. The edit points format will consist of a list of edit points.
+An edit point will consist of a "command", "time", and "arguments", much like a function call or
+a shell command, but with an added "time" field.
+The edit points format will consist of a list of edit points.
 
-The "command" and "arguments" pattern is well-established, and there doesn't seem to be
-a good reason to deviate from that pattern.
+The "command" and "arguments" pattern is well-established. It is seem in programming languages
+and operating shell commands. The "time" field is added becuase it is assumed every edit point
+will have a time associated with it. Also, there may be the need to split up video processing,
+into parallel tasks based on chunks of time, and having the "time" field separated out makes
+that easier.
 
 The edit points will be wrapped in a key-value data structure (e.g., a JSON object), so that
 metadata can be added to the format outsides of the edit points.
@@ -62,3 +66,22 @@ needed in this architecture. JSON can be hand-coded too. BSON is used to solve d
 problems, specifically throughput and latency concerns. It's downsides are lack of readability
 and lack of tooling support. Its performance characterists are not needed for this architecture.
 All other formats I'm familiar with don't have beneficial features for this architecture.
+
+Example edit points payload:
+
+```json
+{
+  "editPoints": [
+    {
+      "command": "scale-percent",
+      "time": ["00:10:00.000", "00:11:10.000"],
+      "arguments": { "percent": 150 }
+    },
+    {
+      "command": "cut",
+      "time": ["00:12:00.000", "00:12:30.000"],
+      "arguments": {}
+    }
+  ]
+}
+```
