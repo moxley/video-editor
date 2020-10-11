@@ -47,7 +47,9 @@ export default function VideoEditor() {
         )}
       </div>
 
-      {editPoint.command && <PointEditor onSave={onEditSaved} />}
+      {editPoint.command && (
+        <PointEditor editPoint={editPoint} onSave={onEditSaved} />
+      )}
     </>
   )
 }
