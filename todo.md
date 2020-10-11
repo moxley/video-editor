@@ -6,6 +6,6 @@
 - [x] Get current video time on user action
 - [ ] Scale control
   - [x] Display control stub
-  - [ ] Pause video
+  - [x] Pause video
   - [ ] Accept scale value
   - [ ] Add edit to edit points array
