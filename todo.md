@@ -4,4 +4,8 @@
 - [x] Play sample video 1
 - [x] Remove built-in controls
 - [x] Get current video time on user action
-- [ ] Custom video controls
+- [ ] Scale control
+  - [x] Display control stub
+  - [ ] Pause video
+  - [ ] Accept scale value
+  - [ ] Add edit to edit points array

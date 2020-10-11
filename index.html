@@ -1,5 +1,12 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <style>
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
   <body>
     <video controls width="500" id="video">
       <source
@@ -14,6 +21,10 @@
       <button id="current-time-btn">Current time</button>
     </div>
 
+    <div class="hidden" id="scale-control">
+      <h2>Scale</h2>
+    </div>
+
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const video = document.getElementById("video")
@@ -21,6 +32,8 @@
         btn.addEventListener("click", function () {
           const currentTime = video.currentTime
           console.log("currentTime", currentTime)
+          const scaleControl = document.getElementById("scale-control")
+          scaleControl.classList.remove("hidden")
         })
       })
     </script>
