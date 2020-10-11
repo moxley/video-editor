@@ -1,20 +1,27 @@
 import React, { useState } from "react"
 import ScaleControl from "./ScaleControl"
-import { state, updateState } from "./../state"
+
+const initialEditPoint = {
+  command: null,
+  times: [null, null],
+  arguments: {},
+}
 
 export default function VideoEditor() {
-  const [currentControl, setCurrentControl] = useState(null)
+  const [edits, setEdits] = useState([])
+  const [editPoint, setEditPoint] = useState(initialEditPoint)
 
   function openControl(name) {
     const video = document.getElementById("video")
     video.pause()
-    setCurrentControl(name)
+    setEditPoint({ ...editPoint, command: name })
   }
 
   function onEditSaved(edit) {
-    updateState({ edits: [...state.edits, edit] })
-    console.log("updated edits", state.edits)
-    setCurrentControl(null)
+    const updatedEdits = [...edits, editPoint]
+    setEdits(updatedEdits)
+    console.log("updated edits", updatedEdits)
+    setEditPoint(initialEditPoint)
   }
 
   return (
@@ -33,7 +40,7 @@ export default function VideoEditor() {
         </button>
       </div>
 
-      {currentControl === "scale" && <ScaleControl onSave={onEditSaved} />}
+      {editPoint.command === "scale" && <ScaleControl onSave={onEditSaved} />}
     </>
   )
 }

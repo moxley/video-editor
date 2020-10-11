@@ -11,3 +11,6 @@
   - [x] Add edit to edit points array
 - [x] Add webpack
 - [x] Organize code to take advantage of webpack
+- [ ] Open to "Edit Point"
+- [ ] Mark starting point
+- [ ] Mark ending point
