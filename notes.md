@@ -44,3 +44,21 @@ is deprecated.
 ```
 open index.html
 ```
+
+## Edit Points Format
+
+An edit point will consist of a "command" and "arguments", much like a function call or
+a shell command. The edit points format will consist of a list of edit points.
+
+The "command" and "arguments" pattern is well-established, and there doesn't seem to be
+a good reason to deviate from that pattern.
+
+The edit points will be wrapped in a key-value data structure (e.g., a JSON object), so that
+metadata can be added to the format outsides of the edit points.
+
+JSON will be chosen for the data encoding. It is widely supported by popular databases. YAML
+and TOML have better features for hand-coding, but hand-coding isn't something that is
+needed in this architecture. JSON can be hand-coded too. BSON is used to solve data exchange
+problems, specifically throughput and latency concerns. It's downsides are lack of readability
+and lack of tooling support. Its performance characterists are not needed for this architecture.
+All other formats I'm familiar with don't have beneficial features for this architecture.
