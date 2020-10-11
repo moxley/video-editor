@@ -60,18 +60,19 @@ that easier.
 The edit points will be wrapped in a key-value data structure (e.g., a JSON object), so that
 metadata can be added to the format outsides of the edit points.
 
-JSON will be chosen for the data encoding. It is widely supported by popular databases. YAML
-and TOML have better features for hand-coding, but hand-coding isn't something that is
+JSON will be chosen for the data encoding. It is widely supported by popular databases, frontend
+APIs and backend APIs. YAML and TOML have better features for hand-coding,
+but hand-coding isn't something that is
 needed in this architecture. JSON can be hand-coded too. BSON is used to solve data exchange
 problems, specifically throughput and latency concerns. It's downsides are lack of readability
 and lack of tooling support. Its performance characterists are not needed for this architecture.
-All other formats I'm familiar with don't have beneficial features for this architecture.
+None of the formats I'm familiar with have beneficial features for this architecture.
 
 Example edit points payload:
 
 ```json
 {
-  "editPoints": [
+  "edits": [
     {
       "command": "scale-percent",
       "time": ["00:10:00.000", "00:11:10.000"],
