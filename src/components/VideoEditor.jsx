@@ -1,9 +1,9 @@
 import React, { useState } from "react"
-import ScaleControl from "./ScaleControl"
+import PointEditor from "./PointEditor"
 
 const initialEditPoint = {
   command: null,
-  times: [null, null],
+  times: { start: null, end: null },
   arguments: {},
 }
 
@@ -11,10 +11,10 @@ export default function VideoEditor() {
   const [edits, setEdits] = useState([])
   const [editPoint, setEditPoint] = useState(initialEditPoint)
 
-  function openControl(name) {
+  function openControl() {
     const video = document.getElementById("video")
-    video.pause()
-    setEditPoint({ ...editPoint, command: name })
+    const times = { start: video.currentTime, end: null }
+    setEditPoint({ ...editPoint, command: "scale", times })
   }
 
   function onEditSaved(edit) {
@@ -22,6 +22,12 @@ export default function VideoEditor() {
     setEdits(updatedEdits)
     console.log("updated edits", updatedEdits)
     setEditPoint(initialEditPoint)
+  }
+
+  function markEnd() {
+    const video = document.getElementById("video")
+    const times = { ...editPoint.times, end: video.currentTime }
+    setEditPoint({ ...editPoint, times })
   }
 
   return (
@@ -35,12 +41,13 @@ export default function VideoEditor() {
       </video>
 
       <div>
-        <button id="open-scale-btn" onClick={() => openControl("scale")}>
-          Scale...
-        </button>
+        <button onClick={openControl}>Mark edit start</button>
+        {editPoint.times.start && (
+          <button onClick={markEnd}>Mark edit end</button>
+        )}
       </div>
 
-      {editPoint.command === "scale" && <ScaleControl onSave={onEditSaved} />}
+      {editPoint.command && <PointEditor onSave={onEditSaved} />}
     </>
   )
 }

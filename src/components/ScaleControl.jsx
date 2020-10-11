@@ -8,7 +8,7 @@ export default function ScaleControl(props) {
     const amount = 50
     const edit = {
       command: "scale",
-      time: [currentTime, currentTime],
+      time: { start: currentTime, end: currentTime },
       arguments: { amount: amount },
     }
 
