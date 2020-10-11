@@ -35,10 +35,6 @@ The first objective is to implement a minimal video player.
 Web browsers provide a `<video>` tag. There is also an `<embed>` tag, but that tag
 is deprecated.
 
-- [x] Initial HTML document
-- [x] Play sample video 1
-- [ ] Custom video controls
-
 ### Try out web-based video player:
 
 ```
