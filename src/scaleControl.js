@@ -1,5 +1,5 @@
 function applyScale(context) {
-  const { scaleControl, video } = context
+  const { scaleControl, video, edits } = context
   const currentTime = video.currentTime
   const amount = 50
   const edit = {
@@ -7,13 +7,15 @@ function applyScale(context) {
     time: [currentTime, currentTime],
     arguments: { amount: amount },
   }
-  console.log("applied edit", edit)
+  edits.push(edit)
+  console.log("updated edits", edits)
   scaleControl.classList.add("hidden")
 }
 
-export default function scaleControl(video) {
+export default function scaleControl(globalContext) {
+  const { video, edits } = globalContext
   const scaleControl = document.getElementById("scale-control")
-  const context = { video, scaleControl }
+  const context = { video, scaleControl, edits }
   video.pause()
   scaleControl.classList.remove("hidden")
   const applyBtn = scaleControl.getElementsByClassName("apply")[0]
