@@ -9,4 +9,5 @@
   - [x] Pause video
   - [x] Accept scale value
   - [ ] Add edit to edit points array
-- [ ] Add webpack
+- [x] Add webpack
+- [x] Organize code to take advantage of webpack
