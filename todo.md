@@ -7,5 +7,6 @@
 - [ ] Scale control
   - [x] Display control stub
   - [x] Pause video
-  - [ ] Accept scale value
+  - [x] Accept scale value
   - [ ] Add edit to edit points array
+- [ ] Add webpack

@@ -5,6 +5,13 @@
       .hidden {
         display: none;
       }
+      .radio-group input {
+        float: left;
+      }
+      .radio-group label {
+        display: block;
+        margin-left: 1.5rem;
+      }
     </style>
   </head>
   <body>
@@ -23,6 +30,15 @@
 
     <div class="hidden" id="scale-control">
       <h2>Scale</h2>
+      <div class="radio-group">
+        <input type="radio" name="amount" value="50" id="scale-50-percent" />
+        <label for="scale-50-percent">50%</label>
+
+        <input type="radio" name="amount" value="150" id="scale-150-percent" />
+        <label for="scale-150-percent">150%</label>
+
+        <button class="apply">Apply</button>
+      </div>
     </div>
 
     <script>
@@ -31,10 +47,20 @@
         const btn = document.getElementById("current-time-btn")
         btn.addEventListener("click", function () {
           const currentTime = video.currentTime
-          console.log("currentTime", currentTime)
           video.pause()
           const scaleControl = document.getElementById("scale-control")
           scaleControl.classList.remove("hidden")
+          const applyBtn = scaleControl.getElementsByClassName("apply")[0]
+          applyBtn.addEventListener("click", function () {
+            const amount = 50
+            const edit = {
+              command: "scale",
+              time: [currentTime, currentTime],
+              arguments: { amount: amount },
+            }
+            console.log("applied edit", edit)
+            scaleControl.classList.add("hidden")
+          })
         })
       })
     </script>
