@@ -5,6 +5,12 @@ import { state, updateState } from "./../state"
 export default function VideoEditor() {
   const [currentControl, setCurrentControl] = useState(null)
 
+  function openControl(name) {
+    const video = document.getElementById("video")
+    video.pause()
+    setCurrentControl(name)
+  }
+
   function onEditSaved(edit) {
     updateState({ edits: [...state.edits, edit] })
     console.log("updated edits", state.edits)
@@ -22,7 +28,7 @@ export default function VideoEditor() {
       </video>
 
       <div>
-        <button id="open-scale-btn" onClick={() => setCurrentControl("scale")}>
+        <button id="open-scale-btn" onClick={() => openControl("scale")}>
           Scale...
         </button>
       </div>
