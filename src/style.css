@@ -1,3 +1,14 @@
 body {
-  background-color: #ccc;
+  background-color: #fff;
+}
+
+.hidden {
+  display: none;
+}
+.radio-group input {
+  float: left;
+}
+.radio-group label {
+  display: block;
+  margin-left: 1.5rem;
 }
