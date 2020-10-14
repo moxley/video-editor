@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useRef, useState } from "react"
 import PointEditor from "./PointEditor"
 import PointsBar from "./PointsBar"
 
@@ -8,16 +8,26 @@ const initialEditPoint = {
   arguments: {},
 }
 
-const videoRef = React.createRef()
-
 export default function VideoEditor() {
   const [edits, setEdits] = useState([])
   const [editPoint, setEditPoint] = useState(initialEditPoint)
-  const videoEl = videoRef.current
-  const videoDuration = videoEl && videoEl.duration
+  const videoRef = useRef(null)
+  const [playing, setPlaying] = useState(false)
+
+  function setVideoRef(videoEl) {
+    if (!videoEl) return
+    if (videoRef.current) return
+    videoRef.current = videoEl
+
+    videoEl.addEventListener("play", (time) => {
+      setVideoState({ playHead: time, duration: video.duration })
+    })
+
+    setPlaying(true)
+  }
 
   function openControl() {
-    const video = videoRef.current
+    const video = document.getElementById("video")
     const times = { start: video.currentTime, end: null }
     setEditPoint({ ...editPoint, command: "scale", times })
   }
@@ -25,7 +35,6 @@ export default function VideoEditor() {
   function onEditSaved(edit) {
     const updatedEdits = [...edits, editPoint]
     setEdits(updatedEdits)
-    console.log("updated edits", updatedEdits)
     setEditPoint(initialEditPoint)
   }
 
@@ -41,7 +50,7 @@ export default function VideoEditor() {
         controls
         id="video"
         style={{ width: "100%", maxWidth: "960px" }}
-        ref={videoRef}
+        ref={setVideoRef}
       >
         <source
           src="https://embedwistia-a.akamaihd.net/deliveries/aff5dbbb15cde4c917a1094efabe69a97ddb7d8b/Hackathon.mp4"
@@ -53,7 +62,8 @@ export default function VideoEditor() {
       <PointsBar
         edits={edits}
         editPoint={editPoint}
-        videoDuration={videoDuration}
+        videoRef={videoRef}
+        playing={playing}
       />
 
       <div>

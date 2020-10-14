@@ -14,4 +14,5 @@
 - [x] Open to "Edit Point"
 - [x] Mark starting point
 - [x] Mark ending point
-- [ ] Edit points display bar
+- [x] Edit points display bar
+- [x] Display playhead location on display bar
