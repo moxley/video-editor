@@ -62,6 +62,7 @@ export default function VideoEditor() {
       <PointsBar
         edits={edits}
         editPoint={editPoint}
+        edits={edits}
         videoRef={videoRef}
         playing={playing}
       />

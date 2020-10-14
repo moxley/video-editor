@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react"
 
 export default function PointsBar(props) {
-  const { editPoint, videoRef } = props
+  const { editPoint, videoRef, edits } = props
   const { start, end } = editPoint.times
   const listenerSetRef = useRef(false)
   const [videoState, setVideoState] = useState({
@@ -35,10 +35,11 @@ export default function PointsBar(props) {
     )
   }
 
-  function startIndicator() {
-    if (!(videoState.duration && start)) return null
+  function startIndicator(edit) {
+    const { times } = edit
+    if (!(videoState.duration && times.start)) return null
 
-    const startPercent = (start / videoState.duration) * 100
+    const startPercent = (times.start / videoState.duration) * 100
 
     return (
       <div
@@ -51,15 +52,17 @@ export default function PointsBar(props) {
           left: `${startPercent}%`,
           cursor: "grabbing",
         }}
+        onClick={() => console.log("onClick")}
       >
         &nbsp;
       </div>
     )
   }
 
-  function endIndicator() {
-    if (!(videoState.duration && end)) return null
-    const percent = (end / videoState.duration) * 100
+  function endIndicator(edit) {
+    const { times } = edit
+    if (!(videoState.duration && times.end)) return null
+    const percent = (times.end / videoState.duration) * 100
     return (
       <div
         style={{
@@ -77,6 +80,26 @@ export default function PointsBar(props) {
     )
   }
 
+  function SingleEdit(props) {
+    const { edit } = props
+
+    return (
+      <>
+        {startIndicator(edit)}
+        {endIndicator(edit)}
+      </>
+    )
+  }
+
+  function editsRendered() {
+    if (!editPoint || !edits) return null
+    console.log("editPoint", editPoint)
+    console.log("edits", edits)
+    const allEdits = [editPoint].concat(edits)
+    console.log("allEdits", allEdits)
+    return allEdits.map((edit, index) => <SingleEdit edit={edit} key={index} />)
+  }
+
   return (
     <div
       style={{
@@ -88,8 +111,7 @@ export default function PointsBar(props) {
       }}
     >
       {playHeadIndicator()}
-      {startIndicator()}
-      {endIndicator()}
+      {editsRendered()}
     </div>
   )
 }

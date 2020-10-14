@@ -15,4 +15,7 @@
 - [x] Mark starting point
 - [x] Mark ending point
 - [x] Edit points display bar
-- [x] Display playhead location on display bar
+- [x] Display playhead location on timeline
+- [x] Keep tick marks after applying edit
+- [ ] Click tick mark to edit
+- [ ] Add edit point by clicking on point on timeline
