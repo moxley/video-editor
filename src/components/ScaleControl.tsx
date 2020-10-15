@@ -1,18 +1,27 @@
 import React from "react"
+import { EditPoint } from "../types/video"
 
-export default function ScaleControl(props: any) {
+interface Props {
+  editPoint: EditPoint;
+  onSave?: (edit: EditPoint) => void
+}
+
+export default function ScaleControl(props: Props) {
+  const { editPoint } = props;
+
   function applyChanges() {
     const video = document.getElementById("video") as any
 
     const currentTime = video.currentTime
     const amount = 50
-    const edit = {
+    const updatedEdit = {
+      ...editPoint,
       command: "scale",
       time: { start: currentTime, end: currentTime },
       arguments: { amount: amount },
     }
 
-    props.onSave && props.onSave(edit)
+    props.onSave && props.onSave(updatedEdit)
   }
 
   return (

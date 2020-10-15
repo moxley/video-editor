@@ -102,8 +102,6 @@ export default function PointsBar(props: Props) {
 
   function editsRendered() {
     if (!editPoint || !edits) return null
-    console.log("editPoint", editPoint)
-    console.log("edits", edits)
     return (
       <>
         <SingleEdit edit={editPoint} />

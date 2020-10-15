@@ -22,4 +22,6 @@
 - [x] Update edit point
   - [x] Add `id` field
   - [x] Update when `id` is set
+  - [x] Pass `id` through to save function
 - [ ] Add edit point by clicking on point on timeline
+- [ ] Scale edit should not have an end time

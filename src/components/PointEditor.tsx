@@ -1,7 +1,13 @@
 import React from "react"
+import { EditPoint } from "../types/video"
 import ScaleControl from "./ScaleControl"
 
-export default function PointEditor(props: any) {
+interface Props {
+  editPoint: EditPoint;
+  onSave: (edit: EditPoint) => void;
+}
+
+export default function PointEditor(props: Props) {
   const { onSave, editPoint } = props
 
   return (
@@ -10,7 +16,7 @@ export default function PointEditor(props: any) {
       <br />
       End: {editPoint.times.end}
       <br />
-      <ScaleControl onSave={onSave} />
+      <ScaleControl editPoint={editPoint} onSave={onSave} />
     </>
   )
 }
