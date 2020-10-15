@@ -1,7 +1,7 @@
 import React from "react"
 import ScaleControl from "./ScaleControl"
 
-export default function PointEditor(props) {
+export default function PointEditor(props: any) {
   const { onSave, editPoint } = props
 
   return (

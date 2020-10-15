@@ -1,8 +1,8 @@
 import React from "react"
 
-export default function ScaleControl(props) {
+export default function ScaleControl(props: any) {
   function applyChanges() {
-    const video = document.getElementById("video")
+    const video = document.getElementById("video") as any
 
     const currentTime = video.currentTime
     const amount = 50

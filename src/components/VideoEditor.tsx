@@ -2,11 +2,11 @@ import React, { useRef, useState } from "react"
 import PointEditor from "./PointEditor"
 import PointsBar from "./PointsBar"
 
-const initialEditPoint = {
+const initialEditPoint: any = {
   command: null,
   times: { start: null, end: null },
   arguments: {},
-}
+};
 
 export default function VideoEditor() {
   const [edits, setEdits] = useState([])
@@ -14,34 +14,38 @@ export default function VideoEditor() {
   const videoRef = useRef(null)
   const [playing, setPlaying] = useState(false)
 
-  function setVideoRef(videoEl) {
+  function setVideoRef(videoEl: any) {
     if (!videoEl) return
     if (videoRef.current) return
     videoRef.current = videoEl
 
-    videoEl.addEventListener("play", (time) => {
-      setVideoState({ playHead: time, duration: video.duration })
-    })
+    // videoEl.addEventListener("play", (time: any) => {
+    //   setVideoState({ playHead: time, duration: videoEl.duration })
+    // })
 
     setPlaying(true)
   }
 
   function openControl() {
-    const video = document.getElementById("video")
-    const times = { start: video.currentTime, end: null }
+    const video = document.getElementById("video") as any;
+    const times: any = { start: video.currentTime, end: null }
     setEditPoint({ ...editPoint, command: "scale", times })
   }
 
-  function onEditSaved(edit) {
+  function onEditSaved(edit: any) {
     const updatedEdits = [...edits, editPoint]
     setEdits(updatedEdits)
     setEditPoint(initialEditPoint)
   }
 
   function markEnd() {
-    const video = document.getElementById("video")
+    const video = document.getElementById("video") as any
     const times = { ...editPoint.times, end: video.currentTime }
     setEditPoint({ ...editPoint, times })
+  }
+
+  function onEdit(edit: any) {
+    setEditPoint(edit);
   }
 
   return (
@@ -62,9 +66,9 @@ export default function VideoEditor() {
       <PointsBar
         edits={edits}
         editPoint={editPoint}
-        edits={edits}
         videoRef={videoRef}
         playing={playing}
+        onEdit={onEdit}
       />
 
       <div>
