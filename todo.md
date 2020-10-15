@@ -19,5 +19,7 @@
 - [x] Keep tick marks after applying edit
 - [x] Click tick mark to edit
 - [x] Convert project to TypeScript
-- [ ] Update edit point
+- [x] Update edit point
+  - [x] Add `id` field
+  - [x] Update when `id` is set
 - [ ] Add edit point by clicking on point on timeline

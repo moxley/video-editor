@@ -2,11 +2,13 @@ import React, { useRef, useState } from "react"
 import PointEditor from "./PointEditor"
 import PointsBar from "./PointsBar"
 import { EditPoint, TimeSegment } from "../types/video"
+import { guid } from "../lib/idGenerator";
 
 const initialEditPoint: EditPoint = {
-  command: null,
-  times: { start: null, end: null },
   arguments: {},
+  command: null,
+  id: null,
+  times: { start: null, end: null },
 };
 
 export default function VideoEditor() {
@@ -34,7 +36,15 @@ export default function VideoEditor() {
   }
 
   function onEditSaved(edit: EditPoint) {
-    const updatedEdits = [...edits, editPoint]
+    let updatedEdits
+
+    if (edit.id) {
+      updatedEdits = edits.map(e => e.id === edit.id ? edit : e)
+    } else {
+      const id = guid()
+      updatedEdits = [...edits, { ...editPoint, id }]
+    }
+
     setEdits(updatedEdits)
     setEditPoint(initialEditPoint)
   }
