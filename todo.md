@@ -19,5 +19,5 @@
 - [x] Keep tick marks after applying edit
 - [x] Click tick mark to edit
 - [x] Convert project to TypeScript
-- [x] Update edit point
+- [ ] Update edit point
 - [ ] Add edit point by clicking on point on timeline

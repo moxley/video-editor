@@ -1,6 +1,15 @@
 import React, { useRef, useState } from "react"
+import { EditPoint } from "../types/video"
 
-export default function PointsBar(props: any) {
+interface Props {
+  onEdit: (edit: EditPoint) => void;
+  editPoint: EditPoint;
+  videoRef: any;
+  edits: EditPoint[];
+  playing: boolean;
+}
+
+export default function PointsBar(props: Props) {
   const { editPoint, videoRef, edits } = props
   const listenerSetRef = useRef(false)
   const [videoState, setVideoState] = useState({
@@ -35,7 +44,7 @@ export default function PointsBar(props: any) {
     )
   }
 
-  function startIndicator(edit: any) {
+  function startIndicator(edit: EditPoint) {
     const { times } = edit
     if (!(videoState.duration && times.start)) return null
 
@@ -59,7 +68,7 @@ export default function PointsBar(props: any) {
     )
   }
 
-  function endIndicator(edit: any) {
+  function endIndicator(edit: EditPoint) {
     const { times } = edit
     if (!(videoState.duration && times.end)) return null
     const percent = (times.end / videoState.duration) * 100
@@ -98,7 +107,7 @@ export default function PointsBar(props: any) {
     return (
       <>
         <SingleEdit edit={editPoint} />
-        {edits.map((edit: any, index: number) => <SingleEdit edit={edit} key={index} />)}
+        {edits.map((edit: EditPoint, index: number) => <SingleEdit edit={edit} key={index} />)}
       </>
     )
   }

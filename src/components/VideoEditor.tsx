@@ -1,16 +1,17 @@
 import React, { useRef, useState } from "react"
 import PointEditor from "./PointEditor"
 import PointsBar from "./PointsBar"
+import { EditPoint, TimeSegment } from "../types/video"
 
-const initialEditPoint: any = {
+const initialEditPoint: EditPoint = {
   command: null,
   times: { start: null, end: null },
   arguments: {},
 };
 
 export default function VideoEditor() {
-  const [edits, setEdits] = useState([])
-  const [editPoint, setEditPoint] = useState(initialEditPoint)
+  const [edits, setEdits]: [EditPoint[], (value: EditPoint[]) => void] = useState([] as EditPoint[])
+  const [editPoint, setEditPoint]: [EditPoint, (value: EditPoint) => void] = useState(initialEditPoint)
   const videoRef = useRef(null)
   const [playing, setPlaying] = useState(false)
 
@@ -28,11 +29,11 @@ export default function VideoEditor() {
 
   function openControl() {
     const video = document.getElementById("video") as any;
-    const times: any = { start: video.currentTime, end: null }
+    const times: TimeSegment = { start: video.currentTime, end: null }
     setEditPoint({ ...editPoint, command: "scale", times })
   }
 
-  function onEditSaved(edit: any) {
+  function onEditSaved(edit: EditPoint) {
     const updatedEdits = [...edits, editPoint]
     setEdits(updatedEdits)
     setEditPoint(initialEditPoint)
@@ -44,7 +45,7 @@ export default function VideoEditor() {
     setEditPoint({ ...editPoint, times })
   }
 
-  function onEdit(edit: any) {
+  function onEdit(edit: EditPoint) {
     setEditPoint(edit);
   }
 
