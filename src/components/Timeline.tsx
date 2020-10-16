@@ -1,5 +1,26 @@
 import React, { useRef, useState } from "react"
+import styled from 'styled-components'
 import { EditPoint } from "../types/video"
+// import { initializeCursor } from "../lib/cursor"
+
+const Bar = styled.div`
+  height: 10px;
+  background-color: #888;
+  margin-bottom: 1em;
+  margin-top: 0.5em;
+  position: relative;
+  &:hover {
+    cursor: none;
+  }
+`;
+
+const StartIndicator = styled.div`
+  width: 4px;
+  height: 19px;
+  background-color: rgb(216, 216, 0);
+  top: -5px;
+  position: absolute;
+`;
 
 interface Props {
   onEdit: (edit: EditPoint) => void;
@@ -51,20 +72,12 @@ export default function Timeline(props: Props) {
     const startPercent = (times.start / videoState.duration) * 100
 
     return (
-      <div
-        style={{
-          width: "4px",
-          height: "19px",
-          backgroundColor: "rgb(216, 216, 0)",
-          top: "-5px",
-          position: "absolute",
-          left: `${startPercent}%`,
-          cursor: "grabbing",
-        }}
+      <StartIndicator
+        style={{left: `${startPercent}%`, cursor: "grabbing"}}
         onClick={() => props.onEdit(edit)}
       >
         &nbsp;
-      </div>
+      </StartIndicator>
     )
   }
 
@@ -110,18 +123,38 @@ export default function Timeline(props: Props) {
     )
   }
 
+  const [hovering, setHovering]: [boolean, (value: boolean) => void] = useState(false as boolean);
+  const pointerRef = useRef(null);
+  // TODO Why offset -10?
+  const offset = 10;
+
+  function onMouseEnter(ev: any) {
+    ev.target.onmousemove = (ev: any) => {
+      const pointer = pointerRef.current;
+      if (!pointer) return;
+      const x = ev.clientX - offset;
+      pointer.style.left = `${x}px`;
+    }
+    setHovering(true)
+  }
+
+  function onMouseLeave(ev: any) {
+    ev.target.onmousemove = null;
+    setHovering(false)
+  }
+
+  function onMouseDown(ev: any) {
+    const x = ev.clientX - offset;
+    console.log("mousedown x", x);
+  }
+
   return (
-    <div
-      style={{
-        height: "10px",
-        backgroundColor: "#888",
-        marginBottom: "1em",
-        marginTop: "0.5em",
-        position: "relative",
-      }}
-    >
-      {playHeadIndicator()}
-      {editsRendered()}
-    </div>
+    <>
+      <Bar onMouseEnter={onMouseEnter as any} onMouseLeave={onMouseLeave as any} onMouseDown={onMouseDown}>
+        {playHeadIndicator()}
+        {editsRendered()}
+        {hovering && <StartIndicator ref={pointerRef}>&nbsp;</StartIndicator>}
+      </Bar>
+    </>
   )
 }
