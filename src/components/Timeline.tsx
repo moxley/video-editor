@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react"
 import styled from 'styled-components'
 import { EditPoint } from "../types/video"
-// import { initializeCursor } from "../lib/cursor"
+import VideoConstants from "../lib/videoConstants";
 
 const Bar = styled.div`
   height: 10px;
@@ -35,7 +35,6 @@ export default function Timeline(props: Props) {
   const listenerSetRef = useRef(false)
   const [videoState, setVideoState] = useState({
     playHead: null,
-    duration: null,
   })
 
   const [hovering, setHovering]: [boolean, (value: boolean) => void] = useState(false as boolean);
@@ -47,15 +46,14 @@ export default function Timeline(props: Props) {
   if (videoRef.current && !listenerSetRef.current) {
     videoRef.current.addEventListener("timeupdate", (ev: any) => {
       const time = ev.target.currentTime
-      const video = videoRef.current
-      setVideoState({ playHead: time, duration: video.duration })
+      setVideoState({ playHead: time })
     })
     listenerSetRef.current = true
   }
 
   function playHeadIndicator() {
     if (!videoState.playHead) return null
-    const percent = (videoState.playHead / videoState.duration) * 100
+    const percent = (videoState.playHead / VideoConstants.timelineLength) * 100
 
     return (
       <div
@@ -74,9 +72,9 @@ export default function Timeline(props: Props) {
   function startIndicator(edit: EditPoint) {
     const { times } = edit
     const video = videoRef.current;
-    if (!(video && video.duration && times.start)) return null
+    if (!times.start) return null
 
-    const startPercent = (times.start / video.duration) * 100
+    const startPercent = (times.start / VideoConstants.timelineLength) * 100
 
     return (
       <StartIndicator
@@ -90,8 +88,8 @@ export default function Timeline(props: Props) {
 
   function endIndicator(edit: EditPoint) {
     const { times } = edit
-    if (!(videoState.duration && times.end)) return null
-    const percent = (times.end / videoState.duration) * 100
+    if (!times.end) return null
+    const percent = (times.end / VideoConstants.timelineLength) * 100
     return (
       <div
         style={{
@@ -149,8 +147,7 @@ export default function Timeline(props: Props) {
   function onMouseDown(ev: any) {
     const x = ev.clientX - offset;
     const factor = x / barRef.current.clientWidth;
-    const duration = videoRef.current.duration;
-    const start = duration * factor;
+    const start = VideoConstants.timelineLength * factor;
     videoRef.current.currentTime = start;
 
     props.onEdit({
