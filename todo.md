@@ -26,5 +26,5 @@
 - [x] Add edit point by clicking on point on timeline
 - [x] Move play edit to current edit point
 - [x] Scale edit should not have an end time
-- [ ] Allow setting scale to 0%
+- [x] Allow setting scale to 0%
 - [ ] Limit timeline to 145 seconds

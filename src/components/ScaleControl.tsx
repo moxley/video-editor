@@ -31,6 +31,9 @@ export default function ScaleControl(props: Props) {
         <input type="radio" name="amount" value="50" id="scale-50-percent" />
         <label htmlFor="scale-50-percent">50%</label>
 
+        <input type="radio" name="amount" value="100" id="scale-100-percent" />
+        <label htmlFor="scale-100-percent">100%</label>
+
         <input type="radio" name="amount" value="150" id="scale-150-percent" />
         <label htmlFor="scale-150-percent">150%</label>
 
