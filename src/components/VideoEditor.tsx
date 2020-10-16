@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react"
 import PointEditor from "./PointEditor"
-import PointsBar from "./PointsBar"
+import Timeline from "./Timeline"
 import { EditPoint, TimeSegment } from "../types/video"
 import { guid } from "../lib/idGenerator";
 
@@ -74,7 +74,7 @@ export default function VideoEditor() {
         Sorry, your browser doesn't support embedded videos.
       </video>
 
-      <PointsBar
+      <Timeline
         edits={edits}
         editPoint={editPoint}
         videoRef={videoRef}

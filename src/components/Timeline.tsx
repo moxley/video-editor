@@ -9,7 +9,7 @@ interface Props {
   playing: boolean;
 }
 
-export default function PointsBar(props: Props) {
+export default function Timeline(props: Props) {
   const { editPoint, videoRef, edits } = props
   const listenerSetRef = useRef(false)
   const [videoState, setVideoState] = useState({

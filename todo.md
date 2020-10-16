@@ -25,3 +25,4 @@
   - [x] Pass `id` through to save function
 - [ ] Add edit point by clicking on point on timeline
 - [ ] Scale edit should not have an end time
+- [ ] Limit timeline to 145 seconds
