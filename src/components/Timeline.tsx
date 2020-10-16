@@ -151,6 +151,7 @@ export default function Timeline(props: Props) {
     const factor = x / barRef.current.clientWidth;
     const duration = videoRef.current.duration;
     const start = duration * factor;
+    videoRef.current.currentTime = start;
 
     props.onEdit({
       command: "scale",
