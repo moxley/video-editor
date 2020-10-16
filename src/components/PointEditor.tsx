@@ -1,6 +1,7 @@
 import React from "react"
 import { EditPoint } from "../types/video"
 import ScaleControl from "./ScaleControl"
+import { hasEndTime } from "../lib/editCommand";
 
 interface Props {
   editPoint: EditPoint;
@@ -14,8 +15,12 @@ export default function PointEditor(props: Props) {
     <>
       Start: {editPoint.times.start}
       <br />
-      End: {editPoint.times.end}
-      <br />
+      {hasEndTime(editPoint) && (
+        <>
+          End: {editPoint.times.end}
+          <br />
+        </>
+      )}
       <ScaleControl editPoint={editPoint} onSave={onSave} />
     </>
   )

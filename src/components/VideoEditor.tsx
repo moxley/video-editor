@@ -3,6 +3,7 @@ import PointEditor from "./PointEditor"
 import Timeline from "./Timeline"
 import { EditPoint, TimeSegment } from "../types/video"
 import { guid } from "../lib/idGenerator";
+import { hasEndTime } from "../lib/editCommand";
 
 const initialEditPoint: EditPoint = {
   arguments: {},
@@ -84,7 +85,7 @@ export default function VideoEditor() {
 
       <div>
         <button onClick={openControl}>Mark edit start</button>
-        {editPoint.times.start && (
+        {hasEndTime(editPoint) && editPoint.times.start && (
           <button onClick={markEnd}>Mark edit end</button>
         )}
       </div>

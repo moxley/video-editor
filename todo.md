@@ -24,6 +24,7 @@
   - [x] Update when `id` is set
   - [x] Pass `id` through to save function
 - [x] Add edit point by clicking on point on timeline
-- [ ] Move play edit to current edit point
-- [ ] Scale edit should not have an end time
+- [x] Move play edit to current edit point
+- [x] Scale edit should not have an end time
+- [ ] Allow setting scale to 0%
 - [ ] Limit timeline to 145 seconds
