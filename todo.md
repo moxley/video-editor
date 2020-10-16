@@ -23,6 +23,7 @@
   - [x] Add `id` field
   - [x] Update when `id` is set
   - [x] Pass `id` through to save function
-- [ ] Add edit point by clicking on point on timeline
+- [x] Add edit point by clicking on point on timeline
+- [ ] Move play edit to current edit point
 - [ ] Scale edit should not have an end time
 - [ ] Limit timeline to 145 seconds

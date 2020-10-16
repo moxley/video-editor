@@ -38,6 +38,12 @@ export default function Timeline(props: Props) {
     duration: null,
   })
 
+  const [hovering, setHovering]: [boolean, (value: boolean) => void] = useState(false as boolean);
+  const pointerRef = useRef(null);
+  // TODO Why offset -10?
+  const offset = 10;
+  const barRef = useRef(null);
+
   if (videoRef.current && !listenerSetRef.current) {
     videoRef.current.addEventListener("timeupdate", (ev: any) => {
       const time = ev.target.currentTime
@@ -67,9 +73,10 @@ export default function Timeline(props: Props) {
 
   function startIndicator(edit: EditPoint) {
     const { times } = edit
-    if (!(videoState.duration && times.start)) return null
+    const video = videoRef.current;
+    if (!(video && video.duration && times.start)) return null
 
-    const startPercent = (times.start / videoState.duration) * 100
+    const startPercent = (times.start / video.duration) * 100
 
     return (
       <StartIndicator
@@ -115,6 +122,7 @@ export default function Timeline(props: Props) {
 
   function editsRendered() {
     if (!editPoint || !edits) return null
+    
     return (
       <>
         <SingleEdit edit={editPoint} />
@@ -122,11 +130,6 @@ export default function Timeline(props: Props) {
       </>
     )
   }
-
-  const [hovering, setHovering]: [boolean, (value: boolean) => void] = useState(false as boolean);
-  const pointerRef = useRef(null);
-  // TODO Why offset -10?
-  const offset = 10;
 
   function onMouseEnter(ev: any) {
     ev.target.onmousemove = (ev: any) => {
@@ -145,12 +148,21 @@ export default function Timeline(props: Props) {
 
   function onMouseDown(ev: any) {
     const x = ev.clientX - offset;
-    console.log("mousedown x", x);
+    const factor = x / barRef.current.clientWidth;
+    const duration = videoRef.current.duration;
+    const start = duration * factor;
+
+    props.onEdit({
+      command: "scale",
+      id: null,
+      times: { start, end: null },
+      arguments: {}
+    })
   }
 
   return (
     <>
-      <Bar onMouseEnter={onMouseEnter as any} onMouseLeave={onMouseLeave as any} onMouseDown={onMouseDown}>
+      <Bar onMouseEnter={onMouseEnter as any} onMouseLeave={onMouseLeave as any} onMouseDown={onMouseDown} ref={barRef}>
         {playHeadIndicator()}
         {editsRendered()}
         {hovering && <StartIndicator ref={pointerRef}>&nbsp;</StartIndicator>}
