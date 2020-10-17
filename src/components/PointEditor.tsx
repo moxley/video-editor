@@ -44,6 +44,13 @@ export default function PointEditor(props: Props) {
   const { onSave, editPoint } = props
   const [currentTab, setCurrentTab]: [string, (value: string) => void] = useState("scale");
 
+  function tab(tab: TabData, index: number) {
+    const className = tab.name == currentTab ? "active" : "";
+    return <Tab key={index} className={className} onClick={() => setCurrentTab(tab.name)}>
+             {tab.label}
+           </Tab>
+  }
+
   return (
     <>
       Start: {editPoint.times.start}
@@ -55,12 +62,11 @@ export default function PointEditor(props: Props) {
         </>
       )}
       <TabsBackground>
-        {tabs.map((tab: TabData, index: number) => {
-          return <Tab key={index} className={`${tab.name == currentTab ? "active" : ""}`}>{tab.label}</Tab>
-        })}
+        {tabs.map(tab)}
       </TabsBackground>
       <div>
-        <ScaleControl editPoint={editPoint} onSave={onSave} />
+        {currentTab === "scale" && <ScaleControl editPoint={editPoint} onSave={onSave} />}
+        {currentTab === "cut" && <>Cut</>}
       </div>
     </>
   )
