@@ -79,8 +79,7 @@ export default function Timeline(props: Props) {
 
   function startIndicator(edit: EditPoint) {
     const { times } = edit
-    const video = videoRef.current;
-    if (!times.start) return null
+    if (times.start === null) return null
 
     const startPercent = (times.start / VideoConstants.timelineLength) * 100
 
@@ -128,7 +127,7 @@ export default function Timeline(props: Props) {
 
   function editsRendered() {
     if (!editPoint || !edits) return null
-    
+
     return (
       <>
         <SingleEdit edit={editPoint} />

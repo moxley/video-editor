@@ -9,7 +9,7 @@ const initialEditPoint: EditPoint = {
   arguments: {},
   command: null,
   id: null,
-  times: { start: null, end: null },
+  times: { start: 0, end: null },
 };
 
 interface VideoState {
