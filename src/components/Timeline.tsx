@@ -30,19 +30,21 @@ const defaultBorder = "#0af";
 
 const EditSegment = styled.div<{ active?: boolean }>`
   width: 100px;
-  height: 100%;
+  height: 50%;
   background-color: ${(props: any) => props.active ? activeBg : defaultBg};
   border-color: ${(props: any) => props.active ? activeBorder : defaultBorder};
   border-style: solid;
   border-width: 0 1px;
   position: absolute;
-  top: 0;
+  bottom: 0;
   box-sizing: border-box;
 `;
 
 const EditClickControl = styled.div`
   position: absolute;
+  display: inline-block;
   bottom: 0;
+  left: 50%;
   border: 1px solid #ccc;
   border-width: 1px 1px 0 0;
   padding: 0.25em 0.5em;
@@ -54,19 +56,22 @@ const EditClickControl = styled.div`
 
 const DragGrip = styled.img`
   position: absolute;
-  bottom: 30px;
+  top: calc(50% - 9px);
   left: 0;
   &:hover {
     cursor: pointer;
   }
 `;
 
-const EditIcon = styled.img`
+const CommandIcon = styled.img`
   position: absolute;
   left: calc(50% - 10px);
   top: calc(50% - 10px);
   width: 20px;
   opacity: 0.25;
+  &:hover {
+    opacity: 0.80;
+  }
 `;
 
 interface Props {
@@ -74,6 +79,7 @@ interface Props {
   onUpdate: (edit: EditPoint) => void;
   newEdit: (edit: EditPoint) => void;
   onSplit: (updatedEdit: EditPoint, newEdit: EditPoint) => void;
+  onNewCurrentTime: (time: number) => void;
   activeEditId: string | null;
   videoRef: any;
   videoLoaded: boolean;
@@ -127,6 +133,14 @@ export default function Timeline(props: Props) {
     props.onSplit(updatedEdit, newEdit);
   }
 
+  function onSetCurrentTime(ev: any) {
+    const bgBar = backgroundBarRef.current;
+    const x = ev.pageX - offset;
+    const videoFraction = x / bgBar.clientWidth;
+    const time = videoFraction * VideoConstants.timelineLength;
+    props.onNewCurrentTime(time);
+  }
+
   function onEdit(e: any, edit: EditPoint) {
     e.preventDefault();
     e.stopPropagation();
@@ -145,10 +159,9 @@ export default function Timeline(props: Props) {
       <>
         <EditSegment
           style={{left: `${startPercent}%`, width: `${widthPercent}%`}}
-          onClick={ev => onSplitEdit(ev, edit)}
           active={edit.id === activeEditId}
         >
-          <EditIcon src={`/images/${edit.command}-icon.svg`} />
+          <CommandIcon src={`/images/${edit.command}-icon.svg`} onClick={e => onEdit(e, edit)} />
           <DragGrip
             src="/images/drag-grip.png"
             style={{left: 0}}
@@ -165,7 +178,6 @@ export default function Timeline(props: Props) {
             onDragEnd={e => onDragEnd(e, edit, "end")}
             draggable="true"
           />
-          <EditClickControl style={{left: 0}} onClick={e => onEdit(e, edit)}>edit</EditClickControl>
         </EditSegment>
       </>
     )
@@ -258,8 +270,8 @@ export default function Timeline(props: Props) {
   }
 
   return (
-    <BarBackground ref={backgroundBarRef}>
-      <Bar ref={barRef} style={{width: videoBarWidth(), position: "absolute", top: 0}} onClick={timelineClicked}/>
+    <BarBackground ref={backgroundBarRef} onClick={onSetCurrentTime}>
+      <Bar ref={barRef} style={{width: videoBarWidth(), position: "absolute", top: 0}} />
       {playHeadIndicator()}
       {editsRendered()}
       {hovering && <EditSegment ref={pointerRef}>&nbsp;</EditSegment>}

@@ -88,6 +88,11 @@ export default function VideoEditor() {
     setEdits(updatedEdits);
   }
 
+  function onNewCurrentTime(time: number) {
+    const videoEl = videoRef.current;
+    videoEl.currentTime = time;
+  }
+
   function setVideoCurrentTime(edit: EditPoint) {
     const { times } = edit;
     const { start } = times;
@@ -140,6 +145,7 @@ export default function VideoEditor() {
         newEdit={newEdit}
         onUpdate={onUpdate}
         onSplit={onSplit}
+        onNewCurrentTime={onNewCurrentTime}
         videoLoaded={videoState.loaded}
       />
 
