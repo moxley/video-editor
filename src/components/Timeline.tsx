@@ -26,6 +26,9 @@ const EditSegment = styled.div`
   width: 100px;
   height: 100%;
   background-color: #fda;
+  border-color: #fa0;
+  border-style: solid;
+  border-width: 0 1px;
   position: absolute;
   top: 0;
   box-sizing: border-box;
@@ -127,7 +130,6 @@ export default function Timeline(props: Props) {
           style={{left: `${startPercent}%`, width: `${widthPercent}%`}}
           onClick={() => props.onEdit(edit)}
         >
-          <EditPointEl style={{left: 0}} onClick={() => props.onEdit(edit)} />
           <DragGrip
             src="/images/drag-grip.png"
             style={{left: 0}}
@@ -145,7 +147,6 @@ export default function Timeline(props: Props) {
             draggable="true"
           />
           <EditClickControl style={{left: 0}} onClick={() => props.onEdit(edit)}>edit</EditClickControl>
-          <EditPointEl style={{left: "100%"}} />
         </EditSegment>
       </>
     )
