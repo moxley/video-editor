@@ -142,9 +142,15 @@ export default function Timeline(props: Props) {
       const pointer = pointerRef.current;
       if (!pointer) return;
       const x = ev.clientX - offset;
+      const xPercent = barPercent(x);
+      if (xPercent < 0 || xPercent > 100) return;
       pointer.style.left = `${x}px`;
     }
     setHovering(true)
+  }
+
+  function barPercent(x: number) {
+    return 100 * x / barRef.current.clientWidth;
   }
 
   function onMouseLeave(ev: any) {
@@ -153,7 +159,10 @@ export default function Timeline(props: Props) {
   }
 
   function onMouseDown(ev: any) {
-    const x = ev.clientX - offset;
+    let x = ev.clientX - offset;
+    const bPercent = barPercent(x);
+    if (bPercent > 100) x = x * 100 / bPercent;
+    if (bPercent < 0) x = 0;
     const factor = x / backgroundBarRef.current.clientWidth;
     const start = VideoConstants.timelineLength * factor;
     videoRef.current.currentTime = start;
@@ -166,16 +175,19 @@ export default function Timeline(props: Props) {
     })
   }
 
-  function timelineWidth() {
-    if (!videoLoaded) return "100%";
+  function videoBarPercent() {
+    if (!videoLoaded) return 100;
     const videoLength = videoRef.current.duration;
-    const percent = Math.min(100, 100 * videoLength / VideoConstants.timelineLength)
-    return `${percent}%`
+    return Math.min(100, 100 * videoLength / VideoConstants.timelineLength)
+  }
+
+  function videoBarWidth() {
+    return `${videoBarPercent()}%`
   }
 
   return (
     <BarBackground onMouseEnter={onMouseEnter as any} onMouseLeave={onMouseLeave as any} onMouseDown={onMouseDown} ref={backgroundBarRef}>
-      <Bar ref={barRef} style={{width: timelineWidth(), position: "absolute", top: 0}} />
+      <Bar ref={barRef} style={{width: videoBarWidth(), position: "absolute", top: 0}} />
       {playHeadIndicator()}
       {editsRendered()}
       {hovering && <StartIndicator ref={pointerRef}>&nbsp;</StartIndicator>}
