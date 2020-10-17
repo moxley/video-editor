@@ -38,7 +38,6 @@ export default function ScaleControl(props: Props) {
 
   return (
     <div id="scale-control">
-      <h2>Scale</h2>
       <div className="radio-group">
         {percentRadio("50")}
         {percentRadio("100")}

@@ -113,9 +113,7 @@ export default function VideoEditor() {
         )}
       </div>
 
-      {editPoint.command && (
-        <PointEditor editPoint={editPoint} onSave={onEditSaved} />
-      )}
+      <PointEditor editPoint={editPoint} onSave={onEditSaved} />
 
       <div>
         <button onClick={() => setShowEditPointsData(!showEditPointsData)}>{showEditPointsData ? "Hide" : "Show"} edit points data</button>
