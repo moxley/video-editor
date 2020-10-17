@@ -116,6 +116,7 @@ export default function Timeline(props: Props) {
           onDrag={(e: any) => onDrag(e, edit, "start")}
           onDragEnd={(e: any) => onDragEnd(e, edit, "start")}
           draggable="true"
+          onClick={() => props.onEdit(edit)}
         />
         <EditPointEl
           style={{left: `${endPercent}%`}}

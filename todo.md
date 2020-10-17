@@ -44,4 +44,7 @@
 - [x] Drag and drop start and end points
 - [x] Eliminate temporary edit point
 - [x] After adding edit, clicking on timeline to reset end time for new edit
+- [x] Select edit point for editing
+- [ ] Edit point after adjusting start or end
 - [ ] Remove edit points
+- [ ] Time: differentiate between inside and outside of timeline

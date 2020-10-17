@@ -2,7 +2,7 @@ import { EditPoint } from "../types/video";
 
 const initialEditPoint: EditPoint = {
   arguments: {},
-  command: null,
+  command: "scale",
   id: null,
   times: { start: 0, end: null },
 };

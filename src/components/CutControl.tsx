@@ -16,6 +16,9 @@ export default function CutControl(props: Props) {
 
   return (
     <ControlWrapper>
+      ID: {editPoint.id}<br />
+      Start: {editPoint.times.start}<br />
+      End: {editPoint.times.end}<br />
       <button onClick={onSave}>Apply</button>
     </ControlWrapper>
   );

@@ -16,11 +16,13 @@ const initialVideoState: VideoState = {
 }
 
 export default function VideoEditor() {
-  const [edits, setEdits]: [EditPoint[], (value: EditPoint[]) => void] = useState([VideoConstants.initialEditPoint] as EditPoint[])
+  const initialEditPoint = VideoConstants.initialEditPoint;
+  const [edits, setEdits]: [EditPoint[], (value: EditPoint[]) => void] = useState([initialEditPoint] as EditPoint[])
   const videoRef = useRef(null)
   const [videoState, setVideoState]: [VideoState, (value: VideoState) => void] = useState(initialVideoState);
   const [showEditPointsData, setShowEditPointsData]: [boolean, (value: boolean) => void] = useState(false as boolean);
   const videoInitRef = useRef(false);
+  const [editPoint, setEditPoint]: [EditPoint, (value: EditPoint) => void] = useState(initialEditPoint);
 
   function setVideoRef(videoEl: any) {
     if (!videoEl) return
@@ -58,11 +60,13 @@ export default function VideoEditor() {
       const video = videoRef.current;
       video.currentTime = edit.times.start
     }
+    setEditPoint(edit)
   }
 
   function newEdit(edit: EditPoint) {
     const id = guid()
     setEdits([...edits, {...edit, id}])
+    setEditPoint(edit)
   }
 
   function putEndTimeToVideoDuration(edit: EditPoint) {
@@ -84,8 +88,6 @@ export default function VideoEditor() {
         </div>
     })
   }
-
-  const editPoint = edits[edits.length - 1];
 
   return (
     <div style={{ maxWidth: "960px" }}>

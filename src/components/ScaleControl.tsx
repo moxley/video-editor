@@ -39,6 +39,9 @@ export default function ScaleControl(props: Props) {
 
   return (
     <ControlWrapper id="scale-control">
+      ID: {editPoint.id}<br />
+      Start: {editPoint.times.start}<br />
+      End: {editPoint.times.end}<br />
       <div className="radio-group">
         {percentRadio("50")}
         {percentRadio("100")}
