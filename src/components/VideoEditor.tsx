@@ -28,17 +28,18 @@ export default function VideoEditor() {
   const videoRef = useRef(null)
   const [videoState, setVideoState]: [VideoState, (value: VideoState) => void] = useState(initialVideoState);
   const [showEditPointsData, setShowEditPointsData]: [boolean, (value: boolean) => void] = useState(false as boolean);
+  const videoInitRef = useRef(false);
 
   function setVideoRef(videoEl: any) {
     if (!videoEl) return
     if (videoRef.current) return
+    if (videoInitRef.current) return
     videoRef.current = videoEl
     videoRef.current.addEventListener("canplay", () => {
-      // videoEl.addEventListener("play", (time: any) => {
-      //   setVideoState({ playHead: time, duration: videoEl.duration })
-      // })
-
+      if (videoInitRef.current) return
+      videoInitRef.current = true;
       setVideoState({loaded: true, playing: true});
+      setEditPoint(putEndTimeToVideoDuration(editPoint))
     })
   }
 
@@ -69,11 +70,17 @@ export default function VideoEditor() {
   }
 
   function onEdit(edit: EditPoint) {
-    setEditPoint(edit);
+    setEditPoint(putEndTimeToVideoDuration(edit));
     if (edit.times.start !== null) {
       const video = videoRef.current;
       video.currentTime = edit.times.start
     }
+  }
+
+  function putEndTimeToVideoDuration(edit: EditPoint) {
+    const video = videoRef.current;
+    const times = { ...edit.times, end: video.duration };
+    return { ...edit, times }
   }
 
   function editPointsDisplay() {

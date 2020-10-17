@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react"
 import styled from 'styled-components'
 import { EditPoint } from "../types/video"
-import VideoConstants from "../lib/videoConstants";
+import VideoConstants from "../lib/VideoConstants";
 
 const BarBackground = styled.div`
   height: 60px;

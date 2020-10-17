@@ -39,5 +39,6 @@
 - [x] Replace custom cursor with pointer cursor
 - [x] Fix: Show edit point at time 0
 - [x] Initial cut mark is at current time
-- [ ] Auto-set cut end mark
+- [x] Set initial edit end time to end of video
+- [ ] Fix display of end point
 - [ ] Remove edit points
