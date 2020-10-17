@@ -35,4 +35,5 @@
 - [x] Include scale arguments in edit points
 - [x] Tabbed navigation
 - [x] Implement cut feature
+- [x] Expand timeline to make editing easier
 - [ ] Remove edit points

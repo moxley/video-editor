@@ -4,8 +4,7 @@ import { EditPoint } from "../types/video"
 import VideoConstants from "../lib/videoConstants";
 
 const BarBackground = styled.div`
-  height: 10px;
-  background-color: #000;
+  height: 60px;
   margin-bottom: 1em;
   margin-top: 0.5em;
   position: relative;
@@ -15,14 +14,15 @@ const BarBackground = styled.div`
 `;
 
 const Bar = styled.div`
-  height: 10px;
-  background-color: #888;
+  height: 100%;
+  background-color: #fff;
+  border: 1px solid #aaa;
   position: relative;
 `;
 
 const StartIndicator = styled.div`
   width: 4px;
-  height: 19px;
+  height: 69px;
   background-color: rgb(216, 216, 0);
   top: -5px;
   position: absolute;
@@ -66,12 +66,12 @@ export default function Timeline(props: Props) {
     return (
       <div
         style={{
-          height: "10px",
-          backgroundColor: "#aaa",
-          marginBottom: "1em",
-          marginTop: "0.5em",
+          height: "100%",
+          backgroundColor: "#faa",
           position: "relative",
-          width: `${percent}%`,
+          width: "2px",
+          top: "1px",
+          left: `${percent}%`,
         }}
       ></div>
     )
@@ -101,8 +101,8 @@ export default function Timeline(props: Props) {
     return (
       <div
         style={{
-          width: "4px",
-          height: "19px",
+          width: "69px",
+          height: "100%",
           backgroundColor: "#0aa",
           top: "-5px",
           position: "absolute",
