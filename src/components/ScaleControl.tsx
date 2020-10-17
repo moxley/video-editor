@@ -16,10 +16,11 @@ export default function ScaleControl(props: Props) {
 
     const currentTime = video.currentTime
     const amount = parseInt(percent);
+    const origTimes = editPoint.times;
     const updatedEdit: EditPoint = {
       ...editPoint,
       command: "scale",
-      times: { start: currentTime, end: null },
+      times: { ...origTimes, start: currentTime },
       arguments: { amount },
     }
 

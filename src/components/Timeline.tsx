@@ -42,6 +42,18 @@ const EditPointEl = styled.div`
   }
 `;
 
+const EditClickControl = styled.div`
+  position: absolute;
+  bottom: 0;
+  border: 1px solid #ccc;
+  border-width: 1px 1px 0 0;
+  padding: 0.25em 0.5em;
+  border-radius: 0 5px 0 0;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 interface Props {
   onEdit: (edit: EditPoint) => void;
   onUpdate: (edit: EditPoint) => void;
@@ -117,6 +129,7 @@ export default function Timeline(props: Props) {
           draggable="true"
           onClick={() => props.onEdit(edit)}
         />
+        <EditClickControl style={{left: `${startPercent}%`}} onClick={() => props.onEdit(edit)}>edit</EditClickControl>
         <EditPointEl
           style={{left: `${endPercent}%`}}
           onDragStart={(e) => onDragStart(e, edit, "end")}
