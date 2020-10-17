@@ -33,4 +33,5 @@
 - [x] Set no-cursor when pointer is outside video area
 - [x] Display edit points data
 - [x] Include scale arguments in edit points
+- [x] Tabbed navigation
 - [ ] Implement cut feature

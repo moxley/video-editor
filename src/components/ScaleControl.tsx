@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { EditPoint } from "../types/video"
+import ControlWrapper from "./ControlWrapper";
 
 interface Props {
   editPoint: EditPoint;
@@ -37,7 +38,7 @@ export default function ScaleControl(props: Props) {
   }
 
   return (
-    <div id="scale-control">
+    <ControlWrapper id="scale-control">
       <div className="radio-group">
         {percentRadio("50")}
         {percentRadio("100")}
@@ -47,6 +48,6 @@ export default function ScaleControl(props: Props) {
           Apply
         </button>
       </div>
-    </div>
+    </ControlWrapper>
   )
 }

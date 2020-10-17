@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import styled from "styled-components";
 import { EditPoint } from "../types/video"
 import ScaleControl from "./ScaleControl"
+import CutControl from "./CutControl";
 import { hasEndTime } from "../lib/editCommand";
 
 const rounded = "10px";
@@ -28,6 +29,7 @@ interface TabData {
 const TabsBackground = styled.div`
   padding: 0.5em 0.5em 0;
   background-color: #ddd;
+  border-radius: 5px 5px 0 0;
 `;
 
 interface Props {
@@ -42,7 +44,7 @@ const tabs = [
 
 export default function PointEditor(props: Props) {
   const { onSave, editPoint } = props
-  const [currentTab, setCurrentTab]: [string, (value: string) => void] = useState("scale");
+  const [currentTab, setCurrentTab]: [string, (value: string) => void] = useState("cut");
 
   function tab(tab: TabData, index: number) {
     const className = tab.name == currentTab ? "active" : "";
@@ -53,20 +55,26 @@ export default function PointEditor(props: Props) {
 
   return (
     <>
-      Start: {editPoint.times.start}
-      <br />
-      {hasEndTime(editPoint) && (
-        <>
-          End: {editPoint.times.end}
-          <br />
-        </>
-      )}
-      <TabsBackground>
-        {tabs.map(tab)}
-      </TabsBackground>
+      <div style={{marginBottom: "1em"}}>
+        Start: {editPoint.times.start}
+        <br />
+        {hasEndTime(editPoint) && (
+          <>
+            End: {editPoint.times.end}
+            <br />
+          </>
+        )}
+      </div>
+
       <div>
-        {currentTab === "scale" && <ScaleControl editPoint={editPoint} onSave={onSave} />}
-        {currentTab === "cut" && <>Cut</>}
+        <TabsBackground>
+          {tabs.map(tab)}
+        </TabsBackground>
+
+        <div>
+          {currentTab === "scale" && <ScaleControl editPoint={editPoint} onSave={onSave} />}
+          {currentTab === "cut" && <CutControl />}
+        </div>
       </div>
     </>
   )
