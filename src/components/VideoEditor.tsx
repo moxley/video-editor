@@ -60,6 +60,11 @@ export default function VideoEditor() {
     }
   }
 
+  function newEdit(edit: EditPoint) {
+    const id = guid()
+    setEdits([...edits, {...edit, id}])
+  }
+
   function putEndTimeToVideoDuration(edit: EditPoint) {
     if (edit.times.end === null) {
       const video = videoRef.current;
@@ -102,6 +107,7 @@ export default function VideoEditor() {
         videoRef={videoRef}
         playing={videoState.playing}
         onEdit={onEdit}
+        newEdit={newEdit}
         onUpdate={onEditSaved}
         videoLoaded={videoState.loaded}
       />

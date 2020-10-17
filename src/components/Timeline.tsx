@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react"
 import styled from 'styled-components'
 import { EditPoint, TimeSegment } from "../types/video"
 import VideoConstants from "../lib/VideoConstants";
+import { guid } from "../lib/idGenerator";
 
 const BarBackground = styled.div`
   height: 60px;
@@ -45,6 +46,7 @@ const EditPointEl = styled.div`
 interface Props {
   onEdit: (edit: EditPoint) => void;
   onUpdate: (edit: EditPoint) => void;
+  newEdit: (edit: EditPoint) => void;
   videoRef: any;
   videoLoaded: boolean;
   edits: EditPoint[];
@@ -175,8 +177,12 @@ export default function Timeline(props: Props) {
   function timelineClicked(ev: any) {
     const x = ev.clientX - offset;
     const start = x / backgroundBarRef.current.clientWidth * VideoConstants.timelineLength;
-    const times: TimeSegment = { start, end: null };
-    props.onEdit({ ...VideoConstants.initialEditPoint, times })
+    const sortedEdits = edits.sort((a: any, b: any) => a.times.start - b.times.start)
+    const nextEdit = sortedEdits.find((e) => e.times.start > start)
+    const videoLength = videoRef.current.duration;
+    const end = nextEdit ? nextEdit.times.start : videoLength;
+    const times = { start, end };
+    props.newEdit({ ...VideoConstants.initialEditPoint, times })
   }
 
   return (
