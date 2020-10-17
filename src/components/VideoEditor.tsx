@@ -78,9 +78,13 @@ export default function VideoEditor() {
   }
 
   function putEndTimeToVideoDuration(edit: EditPoint) {
-    const video = videoRef.current;
-    const times = { ...edit.times, end: video.duration };
-    return { ...edit, times }
+    if (edit.times.end === null) {
+      const video = videoRef.current;
+      const times = { ...edit.times, end: video.duration };
+      return { ...edit, times }
+    } else {
+      return edit;
+    }
   }
 
   function editPointsDisplay() {

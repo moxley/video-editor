@@ -109,10 +109,50 @@ export default function Timeline(props: Props) {
         >
           &nbsp;
         </EditSegment>
-        <EditPointEl style={{left: `${startPercent}%`}} />
-        <EditPointEl style={{left: `${endPercent}%`}} />
+        <EditPointEl style={{left: `${startPercent}%`}}
+          onDragStart={(e) => onDragStart(e, "start")}
+          onDrag={(e: any) => onDrag(e, "start")}
+          onDragEnd={(e: any) => onDragEnd(e, "start")}
+          draggable="true"
+        />
+        <EditPointEl
+          style={{left: `${endPercent}%`}}
+          onDragStart={(e) => onDragStart(e, "end")}
+          onDrag={(e: any) => onDrag(e, "end")}
+          onDragEnd={(e: any) => onDragEnd(e, "end")}
+          draggable="true"
+        />
       </>
     )
+  }
+
+  const tempTime = useRef(-1 as number);
+
+  function onDragStart(ev: any, name: string) {
+    document.ondragover = (e: any) => e.preventDefault();
+  }
+
+  function onDrag(ev: any, name: string) {
+    const videoEl = videoRef.current;
+    const x = ev.pageX - offset;
+    const leftRatio = x / videoEl.clientWidth;
+    const time = leftRatio * VideoConstants.timelineLength;
+    tempTime.current = time;
+  }
+
+  function onDragEnd(ev: any, name: string) {
+    let times;
+
+    console.log("name", name, ", time", tempTime.current);
+    
+
+    if (name === "start") {
+      times = { ...editPoint.times, start: tempTime.current };
+    } else if (name === "end") {
+      times = { ...editPoint.times, end: tempTime.current };
+    }
+
+    props.onEdit({ ...editPoint, times });
   }
 
   function editsRendered() {
