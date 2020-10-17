@@ -55,7 +55,7 @@ export default function VideoEditor() {
       updatedEdits = edits.map(e => e.id === edit.id ? edit : e)
     } else {
       const id = guid()
-      updatedEdits = [...edits, { ...editPoint, id }]
+      updatedEdits = [...edits, { ...edit, id }]
     }
 
     setEdits(updatedEdits)

@@ -32,5 +32,5 @@
 - [x] Set max display width of timeline to match video width
 - [x] Set no-cursor when pointer is outside video area
 - [x] Display edit points data
-- [ ] Include scale arguments in edit points
+- [x] Include scale arguments in edit points
 - [ ] Implement cut feature
