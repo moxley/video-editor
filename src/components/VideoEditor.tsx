@@ -55,14 +55,12 @@ export default function VideoEditor() {
       setEditPoint(updatedEdit)
     }
 
+    setVideoCurrentTime(edit)
     setEdits(updatedEdits)
   }
 
   function onEdit(edit: EditPoint) {
-    if (edit.times.start !== null) {
-      const video = videoRef.current;
-      video.currentTime = edit.times.start
-    }
+    setVideoCurrentTime(edit)
     setEditPoint(edit)
   }
 
@@ -77,6 +75,15 @@ export default function VideoEditor() {
     const newEdit = {...edit, id}
     setEdits([...edits, newEdit])
     setEditPoint(newEdit)
+    setVideoCurrentTime(newEdit)
+  }
+
+  function setVideoCurrentTime(edit: EditPoint) {
+    const { times } = edit;
+    const { start } = times;
+    const videoEl = videoRef.current;
+    if (start == null || !videoEl) return
+    videoEl.currentTime = start;
   }
 
   function putEndTimeToVideoDuration(edit: EditPoint) {

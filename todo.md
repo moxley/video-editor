@@ -49,7 +49,7 @@
 - [x] Remove edit points
 - [x] Allow edit point removal immediately after adding edit
 - [x] Fix end time null value on saving existing edit
-- [ ] Fix: set video current time to edit point start after dragging start or end control
+- [x] Fix: set video current time to edit point start after dragging start or end control
 - [ ] Allow selecting edit that immediately follows another edit
 - [ ] Highlight edit point currently being edited
 - [ ] Time: differentiate between inside and outside of timeline
