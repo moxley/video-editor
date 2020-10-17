@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react"
 import styled from 'styled-components'
-import { EditPoint, TimeSegment } from "../types/video"
+import { EditPoint } from "../types/video"
 import VideoConstants from "../lib/VideoConstants";
 
 const BarBackground = styled.div`
@@ -9,6 +9,7 @@ const BarBackground = styled.div`
   margin-top: 0.5em;
   position: relative;
   box-sizing: border-box;
+  background-color: #ddd;
 `;
 
 const Bar = styled.div`

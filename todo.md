@@ -69,5 +69,5 @@
 - [x] Visually differentiate between scale and cut
 - [x] On edit, activate the correct tab
 - [x] Prevent dragging end time past video end
-- [ ] Time: differentiate between inside and outside of timeline
+- [x] Visually differentiate between inside and outside of timeline
 - [ ] Fix ghost affect when dragging
