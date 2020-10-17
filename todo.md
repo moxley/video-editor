@@ -29,5 +29,5 @@
 - [x] Allow setting scale to 0%
 - [x] Limit timeline to 145 seconds
 - [x] Indicate on timeline where video end is
-- [ ] Set max display width of timeline to match video width
+- [x] Set max display width of timeline to match video width
 - [ ] Set no-cursor when pointer is outside video area

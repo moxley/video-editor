@@ -72,12 +72,12 @@ export default function VideoEditor() {
   }
 
   return (
-    <>
+    <div style={{ maxWidth: "960px" }}>
       <video
         controls
         id="video"
-        style={{ width: "100%", maxWidth: "960px" }}
         ref={setVideoRef}
+        style={{ width: "100%" }}
       >
         <source
           src="https://embedwistia-a.akamaihd.net/deliveries/aff5dbbb15cde4c917a1094efabe69a97ddb7d8b/Hackathon.mp4"
@@ -105,6 +105,6 @@ export default function VideoEditor() {
       {editPoint.command && (
         <PointEditor editPoint={editPoint} onSave={onEditSaved} />
       )}
-    </>
+    </div>
   )
 }
