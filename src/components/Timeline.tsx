@@ -26,11 +26,20 @@ const EditSegment = styled.div`
   width: 100px;
   height: 100%;
   background-color: #fda;
-  border: 2px solid #fa0;
-  border-width: 0 2px;
   position: absolute;
   top: 0;
   box-sizing: border-box;
+`;
+
+const EditPointEl = styled.div`
+  background-color: #fa0;
+  width: 2px;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  &:hover {
+    cursor: grab;
+  }
 `;
 
 interface Props {
@@ -89,15 +98,20 @@ export default function Timeline(props: Props) {
     if (times.start === null) return null
 
     const startPercent = (times.start / VideoConstants.timelineLength) * 100
+    const endPercent = (times.end / VideoConstants.timelineLength) * 100
     const widthPercent = ((times.end - times.start) / VideoConstants.timelineLength) * 100;
 
     return (
-      <EditSegment
-        style={{left: `${startPercent}%`, width: `${widthPercent}%`, cursor: "grabbing"}}
-        onClick={() => props.onEdit(edit)}
-      >
-        &nbsp;
-      </EditSegment>
+      <>
+        <EditSegment
+          style={{left: `${startPercent}%`, width: `${widthPercent}%`}}
+          onClick={() => props.onEdit(edit)}
+        >
+          &nbsp;
+        </EditSegment>
+        <EditPointEl style={{left: `${startPercent}%`}} />
+        <EditPointEl style={{left: `${endPercent}%`}} />
+      </>
     )
   }
 
