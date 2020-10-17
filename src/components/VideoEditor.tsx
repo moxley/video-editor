@@ -42,14 +42,17 @@ export default function VideoEditor() {
     })
   }
 
-  function onEditSaved(edit: EditPoint) {
+  function onUpdate(edit: EditPoint) {
     let updatedEdits
 
     if (edit.id) {
       updatedEdits = edits.map(e => e.id === edit.id ? edit : e)
+      setEditPoint(edit)
     } else {
       const id = guid()
-      updatedEdits = [...edits, { ...edit, id }]
+      const updatedEdit = { ...edit, id }
+      updatedEdits = [...edits, updatedEdit ]
+      setEditPoint(updatedEdit)
     }
 
     setEdits(updatedEdits)
@@ -110,11 +113,11 @@ export default function VideoEditor() {
         playing={videoState.playing}
         onEdit={onEdit}
         newEdit={newEdit}
-        onUpdate={onEditSaved}
+        onUpdate={onUpdate}
         videoLoaded={videoState.loaded}
       />
 
-      <PointEditor editPoint={editPoint} onSave={onEditSaved} />
+      <PointEditor editPoint={editPoint} onSave={onUpdate} />
 
       <div style={{marginTop: "1em"}}>
         <div>
