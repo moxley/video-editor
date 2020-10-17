@@ -60,6 +60,14 @@ const DragGrip = styled.img`
   }
 `;
 
+const EditIcon = styled.img`
+  position: absolute;
+  left: calc(50% - 10px);
+  top: calc(50% - 10px);
+  width: 20px;
+  opacity: 0.25;
+`;
+
 interface Props {
   onEdit: (edit: EditPoint) => void;
   onUpdate: (edit: EditPoint) => void;
@@ -139,6 +147,7 @@ export default function Timeline(props: Props) {
           onClick={ev => onSplitEdit(ev, edit)}
           active={edit.id === activeEditId}
         >
+          <EditIcon src={`/images/${edit.command}-icon.svg`} />
           <DragGrip
             src="/images/drag-grip.png"
             style={{left: 0}}
