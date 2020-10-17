@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react"
 import styled from 'styled-components'
-import { EditPoint } from "../types/video"
+import { EditPoint, TimeSegment } from "../types/video"
 import VideoConstants from "../lib/VideoConstants";
 
 const BarBackground = styled.div`
@@ -8,9 +8,6 @@ const BarBackground = styled.div`
   margin-bottom: 1em;
   margin-top: 0.5em;
   position: relative;
-  &:hover {
-    cursor: pointer;
-  }
   box-sizing: border-box;
 `;
 
@@ -20,6 +17,9 @@ const Bar = styled.div`
   border: 1px solid #aaa;
   position: relative;
   box-sizing: border-box;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const EditSegment = styled.div`
@@ -44,7 +44,7 @@ const EditPointEl = styled.div`
 
 interface Props {
   onEdit: (edit: EditPoint) => void;
-  editPoint: EditPoint;
+  onUpdate: (edit: EditPoint) => void;
   videoRef: any;
   videoLoaded: boolean;
   edits: EditPoint[];
@@ -52,7 +52,7 @@ interface Props {
 }
 
 export default function Timeline(props: Props) {
-  const { editPoint, videoLoaded, videoRef, edits } = props
+  const { videoLoaded, videoRef, edits } = props
   const listenerSetRef = useRef(false)
   const [videoState, setVideoState] = useState({
     playHead: null,
@@ -110,16 +110,16 @@ export default function Timeline(props: Props) {
           &nbsp;
         </EditSegment>
         <EditPointEl style={{left: `${startPercent}%`}}
-          onDragStart={(e) => onDragStart(e, "start")}
-          onDrag={(e: any) => onDrag(e, "start")}
-          onDragEnd={(e: any) => onDragEnd(e, "start")}
+          onDragStart={(e) => onDragStart(e, edit, "start")}
+          onDrag={(e: any) => onDrag(e, edit, "start")}
+          onDragEnd={(e: any) => onDragEnd(e, edit, "start")}
           draggable="true"
         />
         <EditPointEl
           style={{left: `${endPercent}%`}}
-          onDragStart={(e) => onDragStart(e, "end")}
-          onDrag={(e: any) => onDrag(e, "end")}
-          onDragEnd={(e: any) => onDragEnd(e, "end")}
+          onDragStart={(e) => onDragStart(e, edit, "end")}
+          onDrag={(e: any) => onDrag(e, edit, "end")}
+          onDragEnd={(e: any) => onDragEnd(e, edit, "end")}
           draggable="true"
         />
       </>
@@ -128,11 +128,11 @@ export default function Timeline(props: Props) {
 
   const tempTime = useRef(-1 as number);
 
-  function onDragStart(ev: any, name: string) {
+  function onDragStart(ev: any, edit: EditPoint, name: string) {
     document.ondragover = (e: any) => e.preventDefault();
   }
 
-  function onDrag(ev: any, name: string) {
+  function onDrag(ev: any, edit: EditPoint, name: string) {
     const videoEl = videoRef.current;
     const x = ev.pageX - offset;
     const leftRatio = x / videoEl.clientWidth;
@@ -140,27 +140,23 @@ export default function Timeline(props: Props) {
     tempTime.current = time;
   }
 
-  function onDragEnd(ev: any, name: string) {
+  function onDragEnd(ev: any, edit: EditPoint, name: string) {
     let times;
 
-    console.log("name", name, ", time", tempTime.current);
-    
-
     if (name === "start") {
-      times = { ...editPoint.times, start: tempTime.current };
+      times = { ...edit.times, start: tempTime.current };
     } else if (name === "end") {
-      times = { ...editPoint.times, end: tempTime.current };
+      times = { ...edit.times, end: tempTime.current };
     }
 
-    props.onEdit({ ...editPoint, times });
+    props.onUpdate({ ...edit, times });
   }
 
   function editsRendered() {
-    if (!editPoint || !edits) return null
+    if (!edits) return null
 
     return (
       <>
-        <SingleEdit edit={editPoint} />
         {edits.map((edit: EditPoint, index: number) => <SingleEdit edit={edit} key={index} />)}
       </>
     )
@@ -179,13 +175,13 @@ export default function Timeline(props: Props) {
   function timelineClicked(ev: any) {
     const x = ev.clientX - offset;
     const start = x / backgroundBarRef.current.clientWidth * VideoConstants.timelineLength;
-    const times = { ...editPoint.times, start };
-    props.onEdit({ ...editPoint, times })
+    const times: TimeSegment = { start, end: null };
+    props.onEdit({ ...VideoConstants.initialEditPoint, times })
   }
 
   return (
-    <BarBackground ref={backgroundBarRef} onClick={timelineClicked}>
-      <Bar ref={barRef} style={{width: videoBarWidth(), position: "absolute", top: 0}} />
+    <BarBackground ref={backgroundBarRef}>
+      <Bar ref={barRef} style={{width: videoBarWidth(), position: "absolute", top: 0}} onClick={timelineClicked}/>
       {playHeadIndicator()}
       {editsRendered()}
       {hovering && <EditSegment ref={pointerRef}>&nbsp;</EditSegment>}

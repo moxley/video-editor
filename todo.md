@@ -42,5 +42,6 @@
 - [x] Set initial edit end time to end of video
 - [x] Redesign start and endpoint as a single box
 - [x] Drag and drop start and end points
-- [ ] Remove edit points
+- [ ] Eliminate temporary edit point
 - [ ] After adding edit, clicking on timeline to reset end time for new edit
+- [ ] Remove edit points

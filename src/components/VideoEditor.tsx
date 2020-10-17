@@ -3,14 +3,7 @@ import PointEditor from "./PointEditor"
 import Timeline from "./Timeline"
 import { EditPoint, TimeSegment } from "../types/video"
 import { guid } from "../lib/idGenerator";
-import { hasEndTime } from "../lib/editCommand";
-
-const initialEditPoint: EditPoint = {
-  arguments: {},
-  command: null,
-  id: null,
-  times: { start: 0, end: null },
-};
+import VideoConstants from "../lib/VideoConstants";
 
 interface VideoState {
   playing: boolean;
@@ -23,8 +16,7 @@ const initialVideoState: VideoState = {
 }
 
 export default function VideoEditor() {
-  const [edits, setEdits]: [EditPoint[], (value: EditPoint[]) => void] = useState([] as EditPoint[])
-  const [editPoint, setEditPoint]: [EditPoint, (value: EditPoint) => void] = useState(initialEditPoint)
+  const [edits, setEdits]: [EditPoint[], (value: EditPoint[]) => void] = useState([VideoConstants.initialEditPoint] as EditPoint[])
   const videoRef = useRef(null)
   const [videoState, setVideoState]: [VideoState, (value: VideoState) => void] = useState(initialVideoState);
   const [showEditPointsData, setShowEditPointsData]: [boolean, (value: boolean) => void] = useState(false as boolean);
@@ -38,15 +30,14 @@ export default function VideoEditor() {
     videoRef.current.addEventListener("canplay", () => {
       if (videoInitRef.current) return
       videoInitRef.current = true;
+      let edit = edits[edits.length - 1];
+      const id = guid()
+      edit = { ...edit, id }
+      const leading = edits.slice(0, edits.length - 2);
+      edit = putEndTimeToVideoDuration(edit);
+      setEdits([...leading, edit]);
       setVideoState({loaded: true, playing: true});
-      setEditPoint(putEndTimeToVideoDuration(editPoint))
     })
-  }
-
-  function openControl() {
-    const video = document.getElementById("video") as any;
-    const times: TimeSegment = { start: video.currentTime, end: null }
-    setEditPoint({ ...editPoint, command: "scale", times })
   }
 
   function onEditSaved(edit: EditPoint) {
@@ -60,17 +51,9 @@ export default function VideoEditor() {
     }
 
     setEdits(updatedEdits)
-    setEditPoint(initialEditPoint)
-  }
-
-  function markEnd() {
-    const video = document.getElementById("video") as any
-    const times = { ...editPoint.times, end: video.currentTime }
-    setEditPoint({ ...editPoint, times })
   }
 
   function onEdit(edit: EditPoint) {
-    setEditPoint(putEndTimeToVideoDuration(edit));
     if (edit.times.start !== null) {
       const video = videoRef.current;
       video.currentTime = edit.times.start
@@ -97,6 +80,8 @@ export default function VideoEditor() {
     })
   }
 
+  const editPoint = edits[edits.length - 1];
+
   return (
     <div style={{ maxWidth: "960px" }}>
       <video
@@ -114,19 +99,12 @@ export default function VideoEditor() {
 
       <Timeline
         edits={edits}
-        editPoint={editPoint}
         videoRef={videoRef}
         playing={videoState.playing}
         onEdit={onEdit}
+        onUpdate={onEditSaved}
         videoLoaded={videoState.loaded}
       />
-
-      <div>
-        <button onClick={openControl}>Mark edit start</button>
-        {hasEndTime(editPoint) && editPoint.times.start && (
-          <button onClick={markEnd}>Mark edit end</button>
-        )}
-      </div>
 
       <PointEditor editPoint={editPoint} onSave={onEditSaved} />
 
