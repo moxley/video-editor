@@ -12,22 +12,33 @@ const initialEditPoint: EditPoint = {
   times: { start: null, end: null },
 };
 
+interface VideoState {
+  playing: boolean;
+  loaded: boolean;
+}
+
+const initialVideoState: VideoState = {
+  playing: false,
+  loaded: false
+}
+
 export default function VideoEditor() {
   const [edits, setEdits]: [EditPoint[], (value: EditPoint[]) => void] = useState([] as EditPoint[])
   const [editPoint, setEditPoint]: [EditPoint, (value: EditPoint) => void] = useState(initialEditPoint)
   const videoRef = useRef(null)
-  const [playing, setPlaying] = useState(false)
+  const [videoState, setVideoState]: [VideoState, (value: VideoState) => void] = useState(initialVideoState);
 
   function setVideoRef(videoEl: any) {
     if (!videoEl) return
     if (videoRef.current) return
     videoRef.current = videoEl
+    videoRef.current.addEventListener("canplay", () => {
+      // videoEl.addEventListener("play", (time: any) => {
+      //   setVideoState({ playHead: time, duration: videoEl.duration })
+      // })
 
-    // videoEl.addEventListener("play", (time: any) => {
-    //   setVideoState({ playHead: time, duration: videoEl.duration })
-    // })
-
-    setPlaying(true)
+      setVideoState({loaded: true, playing: true});
+    })
   }
 
   function openControl() {
@@ -79,8 +90,9 @@ export default function VideoEditor() {
         edits={edits}
         editPoint={editPoint}
         videoRef={videoRef}
-        playing={playing}
+        playing={videoState.playing}
         onEdit={onEdit}
+        videoLoaded={videoState.loaded}
       />
 
       <div>

@@ -28,5 +28,6 @@
 - [x] Scale edit should not have an end time
 - [x] Allow setting scale to 0%
 - [x] Limit timeline to 145 seconds
-- [ ] Indicate on timeline where video end is
-- [ ] Set mix display with of timeline to match video width
+- [x] Indicate on timeline where video end is
+- [ ] Set max display width of timeline to match video width
+- [ ] Set no-cursor when pointer is outside video area

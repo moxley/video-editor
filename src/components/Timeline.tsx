@@ -3,15 +3,21 @@ import styled from 'styled-components'
 import { EditPoint } from "../types/video"
 import VideoConstants from "../lib/videoConstants";
 
-const Bar = styled.div`
+const BarBackground = styled.div`
   height: 10px;
-  background-color: #888;
+  background-color: #000;
   margin-bottom: 1em;
   margin-top: 0.5em;
   position: relative;
   &:hover {
     cursor: none;
   }
+`;
+
+const Bar = styled.div`
+  height: 10px;
+  background-color: #888;
+  position: relative;
 `;
 
 const StartIndicator = styled.div`
@@ -26,12 +32,13 @@ interface Props {
   onEdit: (edit: EditPoint) => void;
   editPoint: EditPoint;
   videoRef: any;
+  videoLoaded: boolean;
   edits: EditPoint[];
   playing: boolean;
 }
 
 export default function Timeline(props: Props) {
-  const { editPoint, videoRef, edits } = props
+  const { editPoint, videoLoaded, videoRef, edits } = props
   const listenerSetRef = useRef(false)
   const [videoState, setVideoState] = useState({
     playHead: null,
@@ -41,6 +48,7 @@ export default function Timeline(props: Props) {
   const pointerRef = useRef(null);
   // TODO Why offset -10?
   const offset = 10;
+  const backgroundBarRef = useRef(null);
   const barRef = useRef(null);
 
   if (videoRef.current && !listenerSetRef.current) {
@@ -146,7 +154,7 @@ export default function Timeline(props: Props) {
 
   function onMouseDown(ev: any) {
     const x = ev.clientX - offset;
-    const factor = x / barRef.current.clientWidth;
+    const factor = x / backgroundBarRef.current.clientWidth;
     const start = VideoConstants.timelineLength * factor;
     videoRef.current.currentTime = start;
 
@@ -158,13 +166,20 @@ export default function Timeline(props: Props) {
     })
   }
 
+  function timelineWidth() {
+    if (!videoLoaded) return "100%";
+    const videoLength = videoRef.current.duration;
+    const percent = Math.min(100, 100 * videoLength / VideoConstants.timelineLength)
+    console.log("percent", percent);
+    return `${percent}%`
+  }
+
   return (
-    <>
-      <Bar onMouseEnter={onMouseEnter as any} onMouseLeave={onMouseLeave as any} onMouseDown={onMouseDown} ref={barRef}>
-        {playHeadIndicator()}
-        {editsRendered()}
-        {hovering && <StartIndicator ref={pointerRef}>&nbsp;</StartIndicator>}
-      </Bar>
-    </>
+    <BarBackground onMouseEnter={onMouseEnter as any} onMouseLeave={onMouseLeave as any} onMouseDown={onMouseDown} ref={backgroundBarRef}>
+      <Bar ref={barRef} style={{width: timelineWidth(), position: "absolute", top: 0}} />
+      {playHeadIndicator()}
+      {editsRendered()}
+      {hovering && <StartIndicator ref={pointerRef}>&nbsp;</StartIndicator>}
+    </BarBackground>
   )
 }
