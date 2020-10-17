@@ -42,9 +42,11 @@ const tabs = [
   {name: "cut", label: "Cut"},
 ]
 
+const defaultCommand = "scale";
+
 export default function PointEditor(props: Props) {
   const { onSave, editPoint } = props
-  const [currentTab, setCurrentTab]: [string, (value: string) => void] = useState("cut");
+  const [currentTab, setCurrentTab]: [string, (value: string) => void] = useState(defaultCommand);
 
   function tab(tab: TabData, index: number) {
     const className = tab.name == currentTab ? "active" : "";
@@ -73,7 +75,7 @@ export default function PointEditor(props: Props) {
 
         <div>
           {currentTab === "scale" && <ScaleControl editPoint={editPoint} onSave={onSave} />}
-          {currentTab === "cut" && <CutControl />}
+          {currentTab === "cut" && <CutControl editPoint={editPoint} onSave={onSave} />}
         </div>
       </div>
     </>
