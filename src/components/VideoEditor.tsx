@@ -79,6 +79,15 @@ export default function VideoEditor() {
     setVideoCurrentTime(newEdit)
   }
 
+  function onSplit(updatedEdit: EditPoint, newEdit: EditPoint) {
+    let updatedEdits = edits.map(e => (
+      e.id === updatedEdit.id ? updatedEdit : e
+    ))
+    const id = guid();
+    updatedEdits = [ ...updatedEdits, { ...newEdit, id }]
+    setEdits(updatedEdits);
+  }
+
   function setVideoCurrentTime(edit: EditPoint) {
     const { times } = edit;
     const { start } = times;
@@ -130,6 +139,7 @@ export default function VideoEditor() {
         onEdit={onEdit}
         newEdit={newEdit}
         onUpdate={onUpdate}
+        onSplit={onSplit}
         videoLoaded={videoState.loaded}
       />
 

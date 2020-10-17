@@ -64,6 +64,7 @@ interface Props {
   onEdit: (edit: EditPoint) => void;
   onUpdate: (edit: EditPoint) => void;
   newEdit: (edit: EditPoint) => void;
+  onSplit: (updatedEdit: EditPoint, newEdit: EditPoint) => void;
   activeEditId: string | null;
   videoRef: any;
   videoLoaded: boolean;
@@ -110,6 +111,19 @@ export default function Timeline(props: Props) {
     )
   }
 
+  function onSplitEdit(ev: any, edit: EditPoint) {
+    const times = calculateTimes(ev);
+    const newEdit = { ...VideoConstants.initialEditPoint, times };
+    const updatedEdit = { ...edit, times: { ...edit.times, end: times.start }}
+    props.onSplit(updatedEdit, newEdit);
+  }
+
+  function onEdit(e: any, edit: EditPoint) {
+    e.preventDefault();
+    e.stopPropagation();
+    props.onEdit(edit)
+  }
+
   function SingleEdit(p: any) {
     const { edit } = p;
     const { times } = edit
@@ -122,7 +136,7 @@ export default function Timeline(props: Props) {
       <>
         <EditSegment
           style={{left: `${startPercent}%`, width: `${widthPercent}%`}}
-          onClick={() => props.onEdit(edit)}
+          onClick={ev => onSplitEdit(ev, edit)}
           active={edit.id === activeEditId}
         >
           <DragGrip
@@ -141,7 +155,7 @@ export default function Timeline(props: Props) {
             onDragEnd={e => onDragEnd(e, edit, "end")}
             draggable="true"
           />
-          <EditClickControl style={{left: 0}} onClick={() => props.onEdit(edit)}>edit</EditClickControl>
+          <EditClickControl style={{left: 0}} onClick={e => onEdit(e, edit)}>edit</EditClickControl>
         </EditSegment>
       </>
     )
@@ -219,14 +233,18 @@ export default function Timeline(props: Props) {
   }
 
   function timelineClicked(ev: any) {
+    const times = calculateTimes(ev);
+    props.newEdit({ ...VideoConstants.initialEditPoint, times })
+  }
+
+  function calculateTimes(ev: any) {
     const x = ev.clientX - offset;
     const start = x / backgroundBarRef.current.clientWidth * VideoConstants.timelineLength;
     const sortedEdits = edits.sort((a: any, b: any) => a.times.start - b.times.start)
     const nextEdit = sortedEdits.find((e) => e.times.start > start)
     const videoLength = videoRef.current.duration;
     const end = nextEdit ? nextEdit.times.start : videoLength;
-    const times = { start, end };
-    props.newEdit({ ...VideoConstants.initialEditPoint, times })
+    return { start, end };
   }
 
   return (
