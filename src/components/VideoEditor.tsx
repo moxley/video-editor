@@ -74,8 +74,9 @@ export default function VideoEditor() {
 
   function newEdit(edit: EditPoint) {
     const id = guid()
-    setEdits([...edits, {...edit, id}])
-    setEditPoint(edit)
+    const newEdit = {...edit, id}
+    setEdits([...edits, newEdit])
+    setEditPoint(newEdit)
   }
 
   function putEndTimeToVideoDuration(edit: EditPoint) {

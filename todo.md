@@ -47,7 +47,7 @@
 - [x] Select edit point for editing
 - [x] Edit point after adjusting start or end
 - [x] Remove edit points
-- [ ] Allow edit point removal immediately after adding edit
+- [x] Allow edit point removal immediately after adding edit
 - [ ] Allow selecting edit that immediately follows another edit
 - [ ] Fix end time null value on saving existing edit
 - [ ] Time: differentiate between inside and outside of timeline
