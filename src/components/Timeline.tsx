@@ -22,27 +22,16 @@ const Bar = styled.div`
   }
 `;
 
-const EditSegment = styled.div`
+const EditSegment = styled.div<{ active?: boolean }>`
   width: 100px;
   height: 100%;
-  background-color: #fda;
-  border-color: #fa0;
+  background-color: ${(props: any) => props.active ? "#fda" : "#adf"};
+  border-color: ${(props: any) => props.active ? "#fa0" : "#0af"};
   border-style: solid;
   border-width: 0 1px;
   position: absolute;
   top: 0;
   box-sizing: border-box;
-`;
-
-const EditPointEl = styled.div`
-  background-color: #fa0;
-  width: 2px;
-  position: absolute;
-  top: 0;
-  height: 100%;
-  &:hover {
-    cursor: grab;
-  }
 `;
 
 const EditClickControl = styled.div`
@@ -70,6 +59,7 @@ interface Props {
   onEdit: (edit: EditPoint) => void;
   onUpdate: (edit: EditPoint) => void;
   newEdit: (edit: EditPoint) => void;
+  activeEditId: string | null;
   videoRef: any;
   videoLoaded: boolean;
   edits: EditPoint[];
@@ -77,7 +67,7 @@ interface Props {
 }
 
 export default function Timeline(props: Props) {
-  const { videoLoaded, videoRef, edits } = props
+  const { activeEditId, videoLoaded, videoRef, edits } = props
   const listenerSetRef = useRef(false)
   const [videoState, setVideoState] = useState({
     playHead: null,
@@ -121,7 +111,6 @@ export default function Timeline(props: Props) {
     if (times.start === null) return null
 
     const startPercent = (times.start / VideoConstants.timelineLength) * 100
-    const endPercent = (times.end / VideoConstants.timelineLength) * 100
     const widthPercent = ((times.end - times.start) / VideoConstants.timelineLength) * 100;
 
     return (
@@ -129,6 +118,7 @@ export default function Timeline(props: Props) {
         <EditSegment
           style={{left: `${startPercent}%`, width: `${widthPercent}%`}}
           onClick={() => props.onEdit(edit)}
+          active={edit.id === activeEditId}
         >
           <DragGrip
             src="/images/drag-grip.png"

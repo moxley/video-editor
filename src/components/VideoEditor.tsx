@@ -123,6 +123,7 @@ export default function VideoEditor() {
 
       <Timeline
         edits={edits}
+        activeEditId={editPoint && editPoint.id}
         videoRef={videoRef}
         playing={videoState.playing}
         onEdit={onEdit}
