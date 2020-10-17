@@ -202,7 +202,7 @@ export default function Timeline(props: Props) {
       const widthPercent = 100 * (edit.times.end - newTime) / VideoConstants.timelineLength;
       segmentEl.style.width = `${widthPercent}%`;
     } else if (name === "end") {
-      const newTime = Math.max(0, edit.times.end + timeDelta);
+      const newTime = Math.min(Math.max(0, edit.times.end + timeDelta), videoRef.current.duration);
       tempTime.current = newTime;
       const widthPercent = 100 * (newTime - edit.times.start) / VideoConstants.timelineLength;
       segmentEl.style.width = `${widthPercent}%`;

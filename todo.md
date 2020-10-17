@@ -68,5 +68,6 @@
   - [x] Create new edit point. Change end time of original edit.
 - [x] Visually differentiate between scale and cut
 - [x] On edit, activate the correct tab
-- [ ] Prevent dragging end time past video end
+- [x] Prevent dragging end time past video end
 - [ ] Time: differentiate between inside and outside of timeline
+- [ ] Fix ghost affect when dragging
