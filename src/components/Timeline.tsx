@@ -9,7 +9,7 @@ const BarBackground = styled.div`
   margin-top: 0.5em;
   position: relative;
   &:hover {
-    cursor: none;
+    cursor: pointer;
   }
 `;
 
@@ -137,44 +137,6 @@ export default function Timeline(props: Props) {
     )
   }
 
-  function onMouseEnter(ev: any) {
-    ev.target.onmousemove = (ev: any) => {
-      const pointer = pointerRef.current;
-      if (!pointer) return;
-      const x = ev.clientX - offset;
-      const xPercent = barPercent(x);
-      if (xPercent < 0 || xPercent > 100) return;
-      pointer.style.left = `${x}px`;
-    }
-    setHovering(true)
-  }
-
-  function barPercent(x: number) {
-    return 100 * x / barRef.current.clientWidth;
-  }
-
-  function onMouseLeave(ev: any) {
-    ev.target.onmousemove = null;
-    setHovering(false)
-  }
-
-  function onMouseDown(ev: any) {
-    let x = ev.clientX - offset;
-    const bPercent = barPercent(x);
-    if (bPercent > 100) x = x * 100 / bPercent;
-    if (bPercent < 0) x = 0;
-    const factor = x / backgroundBarRef.current.clientWidth;
-    const start = VideoConstants.timelineLength * factor;
-    videoRef.current.currentTime = start;
-
-    props.onEdit({
-      command: "scale",
-      id: null,
-      times: { start, end: null },
-      arguments: {}
-    })
-  }
-
   function videoBarPercent() {
     if (!videoLoaded) return 100;
     const videoLength = videoRef.current.duration;
@@ -185,8 +147,15 @@ export default function Timeline(props: Props) {
     return `${videoBarPercent()}%`
   }
 
+  function timelineClicked(ev: any) {
+    const x = ev.clientX - offset;
+    const start = x / backgroundBarRef.current.clientWidth * VideoConstants.timelineLength;
+    const times = { ...editPoint.times, start };
+    props.onEdit({ ...editPoint, times })
+  }
+
   return (
-    <BarBackground onMouseEnter={onMouseEnter as any} onMouseLeave={onMouseLeave as any} onMouseDown={onMouseDown} ref={backgroundBarRef}>
+    <BarBackground ref={backgroundBarRef} onClick={timelineClicked}>
       <Bar ref={barRef} style={{width: videoBarWidth(), position: "absolute", top: 0}} />
       {playHeadIndicator()}
       {editsRendered()}

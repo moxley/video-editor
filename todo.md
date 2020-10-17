@@ -36,4 +36,5 @@
 - [x] Tabbed navigation
 - [x] Implement cut feature
 - [x] Expand timeline to make editing easier
+- [x] Replace custom cursor with pointer cursor
 - [ ] Remove edit points

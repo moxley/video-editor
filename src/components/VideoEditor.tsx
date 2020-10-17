@@ -70,6 +70,10 @@ export default function VideoEditor() {
 
   function onEdit(edit: EditPoint) {
     setEditPoint(edit);
+    if (edit.times.start) {
+      const video = videoRef.current;
+      video.currentTime = edit.times.start
+    }
   }
 
   function editPointsDisplay() {
