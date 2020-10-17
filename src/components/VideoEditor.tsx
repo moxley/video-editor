@@ -27,6 +27,7 @@ export default function VideoEditor() {
   const [editPoint, setEditPoint]: [EditPoint, (value: EditPoint) => void] = useState(initialEditPoint)
   const videoRef = useRef(null)
   const [videoState, setVideoState]: [VideoState, (value: VideoState) => void] = useState(initialVideoState);
+  const [showEditPointsData, setShowEditPointsData]: [boolean, (value: boolean) => void] = useState(false as boolean);
 
   function setVideoRef(videoEl: any) {
     if (!videoEl) return
@@ -71,6 +72,16 @@ export default function VideoEditor() {
     setEditPoint(edit);
   }
 
+  function editPointsDisplay() {
+    if (!showEditPointsData) return null;
+    if (edits.length === 0) return <>(no edit points)</>
+    return edits.map((e, index) => {
+      return <div key={index}>
+          {JSON.stringify(e)}
+        </div>
+    })
+  }
+
   return (
     <div style={{ maxWidth: "960px" }}>
       <video
@@ -105,6 +116,11 @@ export default function VideoEditor() {
       {editPoint.command && (
         <PointEditor editPoint={editPoint} onSave={onEditSaved} />
       )}
+
+      <div>
+        <button onClick={() => setShowEditPointsData(!showEditPointsData)}>{showEditPointsData ? "Hide" : "Show"} edit points data</button>
+      </div>
+      {editPointsDisplay()}
     </div>
   )
 }
