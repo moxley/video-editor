@@ -53,7 +53,8 @@
 - [x] Allow selecting edit that immediately follows another edit
   - [x] Add "start" drag control to left side of edit segment
   - [x] Rework geometry logic within drag handling
-- [ ] Use new drag control for moving end time
+- [x] Use new drag control for moving end time
 - [ ] Resolve ghosting effect while dragging
 - [ ] Highlight edit point currently being edited
+- [ ] Allow setting edit point in the middle of another
 - [ ] Time: differentiate between inside and outside of timeline

@@ -140,6 +140,14 @@ export default function Timeline(props: Props) {
           onDragEnd={(e: any) => onDragEnd(e, edit, "start")}
           draggable="true"
         />
+        <DragGrip
+          src="/images/drag-grip.png"
+          style={{left: `${endPercent}%`, marginLeft: "-11px"}}
+          onDragStart={(e) => onDragStart(e, edit, "end")}
+          onDrag={(e: any) => onDrag(e, edit, "end")}
+          onDragEnd={(e: any) => onDragEnd(e, edit, "end")}
+          draggable="true"
+        />
         <EditClickControl style={{left: `${startPercent}%`}} onClick={() => props.onEdit(edit)}>edit</EditClickControl>
         <EditPointEl
           style={{left: `${endPercent}%`}}
@@ -153,7 +161,6 @@ export default function Timeline(props: Props) {
   }
 
   const tempTime = useRef(-1 as number);
-  const tempStartTime = useRef(-1 as number);
   const tempStartX = useRef(-1 as number);
 
   function onDragStart(ev: any, edit: EditPoint, name: string) {
@@ -163,9 +170,13 @@ export default function Timeline(props: Props) {
 
   function onDrag(ev: any, edit: EditPoint, name: string) {
     const x = ev.pageX - tempStartX.current;
-    const leftRatio = x / backgroundBarRef.current.clientWidth;
-    const timeDelta = leftRatio * VideoConstants.timelineLength;
-    tempTime.current = Math.max(0, edit.times.start + timeDelta);
+    const movementRatio = x / backgroundBarRef.current.clientWidth;
+    const timeDelta = movementRatio * VideoConstants.timelineLength;
+    if (name === "start") {
+      tempTime.current = Math.max(0, edit.times.start + timeDelta);
+    } else if (name === "end") {
+      tempTime.current = Math.max(0, edit.times.end + timeDelta);
+    }
   }
 
   function onDragEnd(ev: any, edit: EditPoint, name: string) {
