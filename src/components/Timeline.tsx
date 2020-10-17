@@ -79,7 +79,6 @@ export default function Timeline(props: Props) {
   const [videoState, setVideoState] = useState({
     playHead: null,
   })
-
   const [hovering, setHovering]: [boolean, (value: boolean) => void] = useState(false as boolean);
   const pointerRef = useRef(null);
   // TODO Why offset -10?
@@ -114,8 +113,7 @@ export default function Timeline(props: Props) {
   }
 
   function SingleEdit(p: any) {
-    const { edit } = p
-
+    const { edit } = p;
     const { times } = edit
     if (times.start === null) return null
 
@@ -129,33 +127,26 @@ export default function Timeline(props: Props) {
           style={{left: `${startPercent}%`, width: `${widthPercent}%`}}
           onClick={() => props.onEdit(edit)}
         >
-          &nbsp;
+          <EditPointEl style={{left: 0}} onClick={() => props.onEdit(edit)} />
+          <DragGrip
+            src="/images/drag-grip.png"
+            style={{left: 0}}
+            onDragStart={e => onDragStart(e, edit, "start")}
+            onDrag={e => onDrag(e, edit, "start")}
+            onDragEnd={e => onDragEnd(e, edit, "start")}
+            draggable="true"
+          />
+          <DragGrip
+            src="/images/drag-grip.png"
+            style={{left: "100%", marginLeft: "-11px"}}
+            onDragStart={e => onDragStart(e, edit, "end")}
+            onDrag={e => onDrag(e, edit, "end")}
+            onDragEnd={e => onDragEnd(e, edit, "end")}
+            draggable="true"
+          />
+          <EditClickControl style={{left: 0}} onClick={() => props.onEdit(edit)}>edit</EditClickControl>
+          <EditPointEl style={{left: "100%"}} />
         </EditSegment>
-        <EditPointEl style={{left: `${startPercent}%`}} onClick={() => props.onEdit(edit)} />
-        <DragGrip
-          src="/images/drag-grip.png"
-          style={{left: `${startPercent}%`}}
-          onDragStart={(e) => onDragStart(e, edit, "start")}
-          onDrag={(e: any) => onDrag(e, edit, "start")}
-          onDragEnd={(e: any) => onDragEnd(e, edit, "start")}
-          draggable="true"
-        />
-        <DragGrip
-          src="/images/drag-grip.png"
-          style={{left: `${endPercent}%`, marginLeft: "-11px"}}
-          onDragStart={(e) => onDragStart(e, edit, "end")}
-          onDrag={(e: any) => onDrag(e, edit, "end")}
-          onDragEnd={(e: any) => onDragEnd(e, edit, "end")}
-          draggable="true"
-        />
-        <EditClickControl style={{left: `${startPercent}%`}} onClick={() => props.onEdit(edit)}>edit</EditClickControl>
-        <EditPointEl
-          style={{left: `${endPercent}%`}}
-          onDragStart={(e) => onDragStart(e, edit, "end")}
-          onDrag={(e: any) => onDrag(e, edit, "end")}
-          onDragEnd={(e: any) => onDragEnd(e, edit, "end")}
-          draggable="true"
-        />
       </>
     )
   }

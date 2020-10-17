@@ -55,6 +55,9 @@
   - [x] Rework geometry logic within drag handling
 - [x] Use new drag control for moving end time
 - [ ] Resolve ghosting effect while dragging
+  - [x] Wrap items inside edit segment
+  - [ ] Modify DOM directly to resize segment
 - [ ] Highlight edit point currently being edited
 - [ ] Allow setting edit point in the middle of another
+- [ ] Prevent dragging end time past video end
 - [ ] Time: differentiate between inside and outside of timeline
