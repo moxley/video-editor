@@ -35,6 +35,7 @@ const TabsBackground = styled.div`
 interface Props {
   editPoint: EditPoint;
   onSave: (edit: EditPoint) => void;
+  onDelete: (edit: EditPoint) => void;
 }
 
 const tabs = [
@@ -66,6 +67,9 @@ export default function PointEditor(props: Props) {
             <br />
           </>
         )}
+        <div>
+          <button onClick={() => props.onDelete(editPoint)}>Remove edit</button>
+        </div>
       </div>
 
       <div>

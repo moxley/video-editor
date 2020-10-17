@@ -46,6 +46,8 @@
 - [x] After adding edit, clicking on timeline to reset end time for new edit
 - [x] Select edit point for editing
 - [x] Edit point after adjusting start or end
-- [ ] Leave room to set play point without interferring with edit points
-- [ ] Remove edit points
+- [x] Remove edit points
+- [ ] Allow edit point removal immediately after adding edit
+- [ ] Allow selecting edit that immediately follows another edit
+- [ ] Fix end time null value on saving existing edit
 - [ ] Time: differentiate between inside and outside of timeline

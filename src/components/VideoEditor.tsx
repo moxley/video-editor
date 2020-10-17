@@ -22,7 +22,7 @@ export default function VideoEditor() {
   const [videoState, setVideoState]: [VideoState, (value: VideoState) => void] = useState(initialVideoState);
   const [showEditPointsData, setShowEditPointsData]: [boolean, (value: boolean) => void] = useState(false as boolean);
   const videoInitRef = useRef(false);
-  const [editPoint, setEditPoint]: [EditPoint, (value: EditPoint) => void] = useState(initialEditPoint);
+  const [editPoint, setEditPoint]: [EditPoint | null, (value: EditPoint | null) => void] = useState(null);
 
   function setVideoRef(videoEl: any) {
     if (!videoEl) return
@@ -64,6 +64,12 @@ export default function VideoEditor() {
       video.currentTime = edit.times.start
     }
     setEditPoint(edit)
+  }
+
+  function onDelete(edit: EditPoint) {
+    const updatedEdits = edits.filter(e => e.id !== edit.id)
+    setEdits(updatedEdits);
+    setEditPoint(null)
   }
 
   function newEdit(edit: EditPoint) {
@@ -117,7 +123,7 @@ export default function VideoEditor() {
         videoLoaded={videoState.loaded}
       />
 
-      <PointEditor editPoint={editPoint} onSave={onUpdate} />
+      {editPoint && <PointEditor editPoint={editPoint} onSave={onUpdate} onDelete={onDelete} />}
 
       <div style={{marginTop: "1em"}}>
         <div>
