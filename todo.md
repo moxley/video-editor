@@ -40,5 +40,6 @@
 - [x] Fix: Show edit point at time 0
 - [x] Initial cut mark is at current time
 - [x] Set initial edit end time to end of video
-- [ ] Fix display of end point
+- [x] Redesign start and endpoint as a single box
+- [ ] Drag and drop start and end points
 - [ ] Remove edit points

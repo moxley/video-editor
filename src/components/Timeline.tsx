@@ -11,6 +11,7 @@ const BarBackground = styled.div`
   &:hover {
     cursor: pointer;
   }
+  box-sizing: border-box;
 `;
 
 const Bar = styled.div`
@@ -18,14 +19,18 @@ const Bar = styled.div`
   background-color: #fff;
   border: 1px solid #aaa;
   position: relative;
+  box-sizing: border-box;
 `;
 
-const StartIndicator = styled.div`
-  width: 4px;
-  height: 69px;
-  background-color: rgb(216, 216, 0);
-  top: -5px;
+const EditSegment = styled.div`
+  width: 100px;
+  height: 100%;
+  background-color: #fda;
+  border: 2px solid #fa0;
+  border-width: 0 2px;
   position: absolute;
+  top: 0;
+  box-sizing: border-box;
 `;
 
 interface Props {
@@ -77,51 +82,22 @@ export default function Timeline(props: Props) {
     )
   }
 
-  function startIndicator(edit: EditPoint) {
+  function SingleEdit(p: any) {
+    const { edit } = p
+
     const { times } = edit
     if (times.start === null) return null
 
     const startPercent = (times.start / VideoConstants.timelineLength) * 100
+    const widthPercent = ((times.end - times.start) / VideoConstants.timelineLength) * 100;
 
     return (
-      <StartIndicator
-        style={{left: `${startPercent}%`, cursor: "grabbing"}}
+      <EditSegment
+        style={{left: `${startPercent}%`, width: `${widthPercent}%`, cursor: "grabbing"}}
         onClick={() => props.onEdit(edit)}
       >
         &nbsp;
-      </StartIndicator>
-    )
-  }
-
-  function endIndicator(edit: EditPoint) {
-    const { times } = edit
-    if (!times.end) return null
-    const percent = (times.end / VideoConstants.timelineLength) * 100
-    return (
-      <div
-        style={{
-          width: "69px",
-          height: "100%",
-          backgroundColor: "#0aa",
-          top: "-5px",
-          position: "absolute",
-          left: `${percent}%`,
-          cursor: "grabbing",
-        }}
-      >
-        &nbsp;
-      </div>
-    )
-  }
-
-  function SingleEdit(props: any) {
-    const { edit } = props
-
-    return (
-      <>
-        {startIndicator(edit)}
-        {endIndicator(edit)}
-      </>
+      </EditSegment>
     )
   }
 
@@ -158,7 +134,7 @@ export default function Timeline(props: Props) {
       <Bar ref={barRef} style={{width: videoBarWidth(), position: "absolute", top: 0}} />
       {playHeadIndicator()}
       {editsRendered()}
-      {hovering && <StartIndicator ref={pointerRef}>&nbsp;</StartIndicator>}
+      {hovering && <EditSegment ref={pointerRef}>&nbsp;</EditSegment>}
     </BarBackground>
   )
 }
