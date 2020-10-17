@@ -57,11 +57,12 @@
 - [x] When dragging edit segment, display change in real time
   - [x] Wrap items inside edit segment
   - [x] Modify DOM directly to resize segment
-- [ ] Highlight edit point currently being edited
+- [x] Highlight edit point currently being edited
   - [x] Eliminate separate start and end timeline components
   - [x] Separate color for current segment
   - [x] When resizing, set as active
-  - [ ] After applying setting, set as inactive
+  - [x] After applying setting, set as inactive
+- [ ] In scale settings, set percent to current percent
 - [ ] Allow setting edit point in the middle of another
 - [ ] Prevent dragging end time past video end
 - [ ] Time: differentiate between inside and outside of timeline

@@ -57,6 +57,7 @@ export default function VideoEditor() {
 
     setVideoCurrentTime(edit)
     setEdits(updatedEdits)
+    setEditPoint(null)
   }
 
   function onEdit(edit: EditPoint) {
