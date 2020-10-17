@@ -8,14 +8,13 @@ interface Props {
 }
 
 export default function ScaleControl(props: Props) {
-  const { editPoint } = props;
-  const [percent, setPercent]: [string, (value: string) => void] = useState("100")
+  const [editPoint, setEditPoint]: [EditPoint, (value: EditPoint) => void] = useState(props.editPoint);
 
   function applyChanges() {
     const video = document.getElementById("video") as any
 
     const currentTime = video.currentTime
-    const amount = parseInt(percent);
+    const amount = parseInt(editPoint.arguments.amount);
     const origTimes = editPoint.times;
     const updatedEdit: EditPoint = {
       ...editPoint,
@@ -28,6 +27,8 @@ export default function ScaleControl(props: Props) {
   }
 
   function percentRadio(value: string) {
+    const percent = `${editPoint.arguments.amount}`;
+    
     return <>
       <input type="radio" name="amount" value={value} id={`scale-${value}-percent`} defaultChecked={value === percent} onChange={onPercentChange} />
       <label htmlFor={`scale-${value}-percent`}>{value}%</label>
@@ -35,7 +36,9 @@ export default function ScaleControl(props: Props) {
   }
 
   function onPercentChange(ev: any) {
-    setPercent(ev.target.value)
+    const newEditPoint = { ...editPoint, arguments: { ...editPoint.arguments, amount: ev.target.value }};
+    console.log("newEditPoint", newEditPoint);
+    setEditPoint(newEditPoint)
   }
 
   return (

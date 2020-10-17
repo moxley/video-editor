@@ -62,7 +62,8 @@
   - [x] Separate color for current segment
   - [x] When resizing, set as active
   - [x] After applying setting, set as inactive
-- [ ] In scale settings, set percent to current percent
+- [x] In scale settings, set percent to current percent
 - [ ] Allow setting edit point in the middle of another
 - [ ] Prevent dragging end time past video end
 - [ ] Time: differentiate between inside and outside of timeline
+- [ ] Visually differentiate between scale and cut
