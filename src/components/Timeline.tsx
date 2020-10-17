@@ -170,7 +170,6 @@ export default function Timeline(props: Props) {
     if (!videoLoaded) return "100%";
     const videoLength = videoRef.current.duration;
     const percent = Math.min(100, 100 * videoLength / VideoConstants.timelineLength)
-    console.log("percent", percent);
     return `${percent}%`
   }
 
