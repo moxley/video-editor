@@ -54,9 +54,9 @@
   - [x] Add "start" drag control to left side of edit segment
   - [x] Rework geometry logic within drag handling
 - [x] Use new drag control for moving end time
-- [ ] Resolve ghosting effect while dragging
+- [x] When dragging edit segment, display change in real time
   - [x] Wrap items inside edit segment
-  - [ ] Modify DOM directly to resize segment
+  - [x] Modify DOM directly to resize segment
 - [ ] Highlight edit point currently being edited
 - [ ] Allow setting edit point in the middle of another
 - [ ] Prevent dragging end time past video end

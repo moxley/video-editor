@@ -153,20 +153,37 @@ export default function Timeline(props: Props) {
 
   const tempTime = useRef(-1 as number);
   const tempStartX = useRef(-1 as number);
+  const tempStartTime = useRef(-1 as number);
 
   function onDragStart(ev: any, edit: EditPoint, name: string) {
     tempStartX.current = ev.pageX;
+    if (name === "start") {
+      tempTime.current = edit.times.start;
+    } else if (name === "end") {
+      tempTime.current = edit.times.end;
+    }
     document.ondragover = (e: any) => e.preventDefault();
   }
 
   function onDrag(ev: any, edit: EditPoint, name: string) {
+    const segmentEl = ev.target.parentNode;
+    
     const x = ev.pageX - tempStartX.current;
     const movementRatio = x / backgroundBarRef.current.clientWidth;
     const timeDelta = movementRatio * VideoConstants.timelineLength;
     if (name === "start") {
-      tempTime.current = Math.max(0, edit.times.start + timeDelta);
+      const newTime = Math.max(0, edit.times.start + timeDelta);
+      tempTime.current = newTime;
+      const videoTimeRatio = newTime / VideoConstants.timelineLength;
+      const newLeftPercent = videoTimeRatio * 100;
+      segmentEl.style.left = `${newLeftPercent}%`;
+      const widthPercent = 100 * (edit.times.end - newTime) / VideoConstants.timelineLength;
+      segmentEl.style.width = `${widthPercent}%`;
     } else if (name === "end") {
-      tempTime.current = Math.max(0, edit.times.end + timeDelta);
+      const newTime = Math.max(0, edit.times.end + timeDelta);
+      tempTime.current = newTime;
+      const widthPercent = 100 * (newTime - edit.times.start) / VideoConstants.timelineLength;
+      segmentEl.style.width = `${widthPercent}%`;
     }
   }
 
