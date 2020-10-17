@@ -38,4 +38,6 @@
 - [x] Expand timeline to make editing easier
 - [x] Replace custom cursor with pointer cursor
 - [x] Fix: Show edit point at time 0
+- [x] Initial cut mark is at current time
+- [ ] Auto-set cut end mark
 - [ ] Remove edit points
