@@ -66,6 +66,7 @@
 - [x] Allow setting edit point in the middle of another
   - [x] Don't go into edit mode if click is outside of edit button
   - [x] Create new edit point. Change end time of original edit.
-- [ ] Visually differentiate between scale and cut
+- [x] Visually differentiate between scale and cut
+- [x] On edit, activate the correct tab
 - [ ] Prevent dragging end time past video end
 - [ ] Time: differentiate between inside and outside of timeline

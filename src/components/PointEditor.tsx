@@ -46,12 +46,16 @@ const tabs = [
 const defaultCommand = "scale";
 
 export default function PointEditor(props: Props) {
-  const { onSave, editPoint } = props
-  const [currentTab, setCurrentTab]: [string, (value: string) => void] = useState(defaultCommand);
+  const { onSave } = props
+  const [editPoint, setEditPoint]: [EditPoint, (value: EditPoint) => void] = useState(props.editPoint);
+
+  function setCurrentCommand(command: string) {
+    setEditPoint({ ...editPoint, command })
+  }
 
   function tab(tab: TabData, index: number) {
-    const className = tab.name == currentTab ? "active" : "";
-    return <Tab key={index} className={className} onClick={() => setCurrentTab(tab.name)}>
+    const className = tab.name === editPoint.command ? "active" : "";
+    return <Tab key={index} className={className} onClick={() => setCurrentCommand(tab.name)}>
              {tab.label}
            </Tab>
   }
@@ -78,8 +82,8 @@ export default function PointEditor(props: Props) {
         </TabsBackground>
 
         <div>
-          {currentTab === "scale" && <ScaleControl editPoint={editPoint} onSave={onSave} />}
-          {currentTab === "cut" && <CutControl editPoint={editPoint} onSave={onSave} />}
+          {editPoint.command === "scale" && <ScaleControl editPoint={editPoint} onSave={onSave} />}
+          {editPoint.command === "cut" && <CutControl editPoint={editPoint} onSave={onSave} />}
         </div>
       </div>
     </>
