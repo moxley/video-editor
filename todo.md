@@ -60,7 +60,8 @@
 - [ ] Highlight edit point currently being edited
   - [x] Eliminate separate start and end timeline components
   - [x] Separate color for current segment
-  - [ ] When resizing, set as active
+  - [x] When resizing, set as active
+  - [ ] After applying setting, set as inactive
 - [ ] Allow setting edit point in the middle of another
 - [ ] Prevent dragging end time past video end
 - [ ] Time: differentiate between inside and outside of timeline

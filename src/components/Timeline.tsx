@@ -22,11 +22,16 @@ const Bar = styled.div`
   }
 `;
 
+const activeBg = "#fda";
+const activeBorder = "#fa0";
+const defaultBg = "#adf";
+const defaultBorder = "#0af";
+
 const EditSegment = styled.div<{ active?: boolean }>`
   width: 100px;
   height: 100%;
-  background-color: ${(props: any) => props.active ? "#fda" : "#adf"};
-  border-color: ${(props: any) => props.active ? "#fa0" : "#0af"};
+  background-color: ${(props: any) => props.active ? activeBg : defaultBg};
+  border-color: ${(props: any) => props.active ? activeBorder : defaultBorder};
   border-style: solid;
   border-width: 0 1px;
   position: absolute;
@@ -154,6 +159,9 @@ export default function Timeline(props: Props) {
       tempTime.current = edit.times.end;
     }
     document.ondragover = (e: any) => e.preventDefault();
+    const segmentEl = ev.target.parentNode;
+    segmentEl.style.backgroundColor = activeBg;
+    segmentEl.style.borderColor = activeBorder;
   }
 
   function onDrag(ev: any, edit: EditPoint, name: string) {
