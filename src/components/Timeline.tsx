@@ -54,6 +54,15 @@ const EditClickControl = styled.div`
   }
 `;
 
+const DragGrip = styled.img`
+  position: absolute;
+  bottom: 30px;
+  left: 0;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 interface Props {
   onEdit: (edit: EditPoint) => void;
   onUpdate: (edit: EditPoint) => void;
@@ -129,6 +138,7 @@ export default function Timeline(props: Props) {
           draggable="true"
           onClick={() => props.onEdit(edit)}
         />
+        <DragGrip src="/images/drag-grip.png" />
         <EditClickControl style={{left: `${startPercent}%`}} onClick={() => props.onEdit(edit)}>edit</EditClickControl>
         <EditPointEl
           style={{left: `${endPercent}%`}}

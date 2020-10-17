@@ -51,5 +51,7 @@
 - [x] Fix end time null value on saving existing edit
 - [x] Fix: set video current time to edit point start after dragging start or end control
 - [ ] Allow selecting edit that immediately follows another edit
+  - [x] Add "start" drag control to left side of edit segment
+  - [ ] Rework geometry logic within drag handling
 - [ ] Highlight edit point currently being edited
 - [ ] Time: differentiate between inside and outside of timeline
