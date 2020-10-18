@@ -91,7 +91,8 @@
   - [x] Switching tabs switches command
 - [x] Better UX for "remove" button
 - [x] Add "close" icon button
-- [ ] Add command icons to tabs
+- [x] Add command icons to tabs
+- [ ] Style settings content
 - [ ] Move playhead when resizing segment
 - [ ] Improve hover state styling of edit segment
 - [ ] Fix ghost affect when dragging

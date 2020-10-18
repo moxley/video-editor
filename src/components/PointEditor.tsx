@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React  from "react"
 import styled from "styled-components";
 import { EditPoint } from "../types/video"
 import ScaleControl from "./ScaleControl"
@@ -6,6 +6,13 @@ import CutControl from "./CutControl";
 import VideoConstants from "../lib/VideoConstants";
 
 const rounded = "10px";
+const fontSize = "90%";
+const editorWidth = 250;
+
+interface TabData {
+  name: string;
+  label: string;
+}
 
 const Tab = styled.div`
   display: inline-block;
@@ -21,14 +28,17 @@ const Tab = styled.div`
   }
 `;
 
-const Editor = styled.div`
-  width: 300px;
+const TabIcon = styled.img`
+  width: 12px;
+  margin-right: 5px;
+  margin-bottom: -1px;
+  opacity: 0.4;
 `;
 
-interface TabData {
-  name: string;
-  label: string;
-}
+const Editor = styled.div`
+  width: ${editorWidth}px;
+  font-size: ${fontSize};
+`;
 
 const TabsBackground = styled.div`
   padding: 0.5em 0.5em 0;
@@ -91,6 +101,7 @@ export default function PointEditor(props: Props) {
   function tab(tab: TabData, index: number) {
     const className = tab.name === editPoint.command ? "active" : "";
     return <Tab key={index} className={className} onClick={() => setCurrentCommand(tab.name)}>
+             <TabIcon src={`/images/${tab.name}-icon.svg`} />
              {tab.label}
            </Tab>
   }
@@ -101,14 +112,13 @@ export default function PointEditor(props: Props) {
   const endX = (end / VideoConstants.timelineLength) * timelineWidth;
   const centerOffset = (endX - startX) / 2;
   const centerX = startX + centerOffset;
-  const width = 300;
   const left = Math.min(
-    Math.max(0, centerX - (width / 2)),
-    timelineWidth - width
+    Math.max(0, centerX - (editorWidth / 2)),
+    timelineWidth - editorWidth
   );
 
   return (
-    <div style={{position: "absolute", left: `${left}px`, width: `${width}px`}}>
+    <div style={{position: "absolute", left: `${left}px`, width: `${editorWidth}px`}}>
       <Editor>
         <TabsBackground>
           <Trash onClick={() => props.onDelete(editPoint)}>
