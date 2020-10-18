@@ -95,7 +95,6 @@ export default function Timeline(props: Props) {
   const { activeEditId, videoLoaded, videoRef, edits } = props
   const listenerSetRef = useRef(false)
   const [videoState, setVideoState] = useState({ playHead: 0 })
-  const [hovering, setHovering]: [boolean, (value: boolean) => void] = useState(false as boolean);
   const pointerRef = useRef(null);
   // TODO Why offset -10?
   const offset = 10;
@@ -233,16 +232,6 @@ export default function Timeline(props: Props) {
     props.onUpdate({ ...edit, times });
   }
 
-  function editsRendered() {
-    if (!edits) return null
-
-    return (
-      <>
-        {edits.map((edit: EditPoint, index: number) => <SingleEdit edit={edit} key={index} />)}
-      </>
-    )
-  }
-
   function videoBarPercent() {
     if (!videoLoaded) return 100;
     const videoLength = videoRef.current.duration;
@@ -303,6 +292,16 @@ export default function Timeline(props: Props) {
     )
   }
 
+  function editsRendered() {
+    if (!edits) return null
+
+    return (
+      <>
+        {edits.map((edit: EditPoint, index: number) => <SingleEdit edit={edit} key={index} />)}
+      </>
+    )
+  }
+
   function SingleEdit(p: any) {
     const { edit } = p;
     const { times } = edit
@@ -345,7 +344,6 @@ export default function Timeline(props: Props) {
       <Bar ref={barRef} style={{width: videoBarWidth(), position: "absolute", top: 0}} />
       {playHeadIndicator()}
       {editsRendered()}
-      {hovering && <EditSegment ref={pointerRef}>&nbsp;</EditSegment>}
     </BarBackground>
   )
 }
