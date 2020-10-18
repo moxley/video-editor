@@ -91,6 +91,9 @@ The result was a little awkward.
 
 ## Additional Thoughts
 
+I was told to work only on either the frontend task or the backend task, and that I should choose the task that I have less experience with.
+That's why I chose the frontend task.
+
 The assignment took a very long time to complete for a code evaluation. I could have spent less time on it, but I wouldn't have been satisfied
 with the result. I shot for a solution that got 80% of the way to a finished product (minus actually applying the edits the video).
-Anything less in front of a real customer would be uncomfortable.
+Anything less in front of a real customer would have been uncomfortable.
