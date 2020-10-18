@@ -21,6 +21,10 @@ const Tab = styled.div`
   }
 `;
 
+const Editor = styled.div`
+  width: 300px;
+`;
+
 interface TabData {
   name: string;
   label: string;
@@ -74,7 +78,7 @@ export default function PointEditor(props: Props) {
         </div>
       </div>
 
-      <div>
+      <Editor>
         <TabsBackground>
           {tabs.map(tab)}
         </TabsBackground>
@@ -83,7 +87,7 @@ export default function PointEditor(props: Props) {
           {editPoint.command === "scale" && <ScaleControl editPoint={editPoint} onSave={onSave} onClose={onClose} />}
           {editPoint.command === "cut" && <CutControl editPoint={editPoint} onSave={onSave} onClose={onClose} />}
         </div>
-      </div>
+      </Editor>
     </>
   )
 }

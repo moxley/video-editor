@@ -20,7 +20,6 @@ export default function CutControl(props: Props) {
       <div>
         <button onClick={props.onClose}>Close</button>
       </div>
-      ID: {editPoint.id}<br />
       Start: {editPoint.times.start}<br />
       End: {editPoint.times.end}<br />
     </ControlWrapper>
