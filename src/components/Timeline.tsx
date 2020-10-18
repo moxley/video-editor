@@ -4,7 +4,7 @@ import { EditPoint } from "../types/video"
 import VideoConstants from "../lib/VideoConstants";
 
 const BarBackground = styled.div`
-  height: 60px;
+  height: 80px;
   margin-bottom: 1em;
   margin-top: 0.5em;
   position: relative;
@@ -69,6 +69,15 @@ const AddButton = styled.img`
   }
 `;
 
+const PlayHeadDragSurface = styled.div`
+  position: absolute;
+  top: 0;
+  padding: 0 6px;
+  margin-left: -6px;
+  height: 100%;
+  &:hover { cursor: pointer; }
+`;
+
 interface Props {
   onEdit: (edit: EditPoint) => void;
   onUpdate: (edit: EditPoint) => void;
@@ -106,16 +115,18 @@ export default function Timeline(props: Props) {
     const percent = (videoState.playHead / VideoConstants.timelineLength) * 100
 
     return (
-      <div style={{position: "relative", left: `${percent}%`, height: "100%"}}>
-        <div
-          style={{
-            height: "100%",
-            backgroundColor: "#faa",
-            position: "absolute",
-            width: "2px",
-            top: "1px",
-          }}
-        />
+      <div style={{position: "relative", left: `${percent}%`, width: "40px", height: "100%"}}>
+        <PlayHeadDragSurface>
+          <div
+            style={{
+              height: "100%",
+              backgroundColor: "#faa",
+              position: "absolute",
+              width: "2px",
+              top: "1px",
+            }}
+          />
+        </PlayHeadDragSurface>
         <AddButton src="/images/add-btn.svg" onClick={onAdd} />
       </div>
     )
@@ -189,7 +200,7 @@ export default function Timeline(props: Props) {
             onDragStart={e => onDragStart(e, edit, "start")}
             onDrag={e => onDrag(e, edit, "start")}
             onDragEnd={e => onDragEnd(e, edit, "start")}
-            draggable="true"
+            draggable
           />
           <DragGrip
             src="/images/drag-grip.png"
@@ -197,7 +208,7 @@ export default function Timeline(props: Props) {
             onDragStart={e => onDragStart(e, edit, "end")}
             onDrag={e => onDrag(e, edit, "end")}
             onDragEnd={e => onDragEnd(e, edit, "end")}
-            draggable="true"
+            draggable
           />
         </EditSegment>
       </>
