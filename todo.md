@@ -70,14 +70,14 @@
 - [x] On edit, activate the correct tab
 - [x] Prevent dragging end time past video end
 - [x] Visually differentiate between inside and outside of timeline
-- [ ] Edit by clicking on edit segment
+- [x] Edit by clicking on edit segment
   - [x] Reduce height of edit segments
   - [x] Clicking above segment changes the play point
   - [x] Button attached to play point creates new edit
   - [x] Clicking on segment goes into edit mode
   - [x] Fix missing command on split segment, left side
-  - [ ] Fix null end time for split segment, right side
-  - [ ] Hover state for "add" button
+  - [x] Fix null end time for split segment, right side
+  - [x] Hover state for "add" button
 - [ ] Prevent overlapping edits
 - [ ] Show playhead at time=0
 - [ ] Hide "add" button when playhead is same as edit start

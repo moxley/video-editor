@@ -18,9 +18,7 @@ const Bar = styled.div`
   border: 1px solid #aaa;
   position: relative;
   box-sizing: border-box;
-  &:hover {
-    cursor: pointer;
-  }
+  &:hover { cursor: pointer; }
 `;
 
 const activeBg = "#fda";
@@ -41,18 +39,6 @@ const EditSegment = styled.div<{ active?: boolean }>`
   &:hover {
     img { opacity: 0.50; }
   }
-`;
-
-const EditClickControl = styled.div`
-  position: absolute;
-  display: inline-block;
-  bottom: 0;
-  left: 50%;
-  border: 1px solid #ccc;
-  border-width: 1px 1px 0 0;
-  padding: 0.25em 0.5em;
-  border-radius: 0 5px 0 0;
-  &:hover { cursor: pointer; }
 `;
 
 const DragGrip = styled.img`
@@ -76,7 +62,11 @@ const AddButton = styled.img`
   top: 0;
   margin: 0.25em 0 0 0.25em;
   width: 16px;
-  &:hover { cursor: pointer; }
+  opacity: 0.5;
+  &:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
 `;
 
 interface Props {
