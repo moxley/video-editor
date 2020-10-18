@@ -208,14 +208,19 @@ export default function Timeline(props: Props) {
 
   const tempTime = useRef(-1 as number);
   const tempStartX = useRef(-1 as number);
-  const tempStartTime = useRef(-1 as number);
+  const minStartTime = useRef(0);
+  const maxEndTime = useRef(0);
 
   function onDragStart(ev: any, edit: EditPoint, name: string) {
     tempStartX.current = ev.pageX;
     if (name === "start") {
-      tempTime.current = edit.times.start;
+      const time = edit.times.start;
+      tempTime.current = time;
+      minStartTime.current = getMinStartTime(time);
     } else if (name === "end") {
-      tempTime.current = edit.times.end;
+      const time = edit.times.end;
+      tempTime.current = time;
+      maxEndTime.current = getMaxEndTime(time);
     }
     document.ondragover = (e: any) => e.preventDefault();
     const segmentEl = ev.target.parentNode;
@@ -223,14 +228,30 @@ export default function Timeline(props: Props) {
     segmentEl.style.borderColor = activeBorder;
   }
 
+  function getMinStartTime(time: number) {
+    const leftEdit = sortEdits().reverse().find(({ times: { end }}: any) => end <= time)
+    return leftEdit && leftEdit.times.end || 0;
+  }
+
+  function getMaxEndTime(time: number) {
+    const rightEdit = sortEdits().find(({ times: { start }}: any) => start >= time)
+    return rightEdit && rightEdit.times.start || 0;
+  }
+
   function onDrag(ev: any, edit: EditPoint, name: string) {
     const segmentEl = ev.target.parentNode;
-    
     const x = ev.pageX - tempStartX.current;
     const movementRatio = x / backgroundBarRef.current.clientWidth;
     const timeDelta = movementRatio * VideoConstants.timelineLength;
+
     if (name === "start") {
-      const newTime = Math.max(0, edit.times.start + timeDelta);
+      const newTime = Math.min(
+        edit.times.end,
+        Math.max(
+          minStartTime.current,
+          edit.times.start + timeDelta
+        )
+      );
       tempTime.current = newTime;
       const videoTimeRatio = newTime / VideoConstants.timelineLength;
       const newLeftPercent = videoTimeRatio * 100;
@@ -238,7 +259,10 @@ export default function Timeline(props: Props) {
       const widthPercent = 100 * (edit.times.end - newTime) / VideoConstants.timelineLength;
       segmentEl.style.width = `${widthPercent}%`;
     } else if (name === "end") {
-      const newTime = Math.min(Math.max(0, edit.times.end + timeDelta), videoRef.current.duration);
+      const newTime = Math.min(
+        Math.max(edit.times.start, edit.times.end + timeDelta),
+        maxEndTime.current || videoRef.current.duration
+      );
       tempTime.current = newTime;
       const widthPercent = 100 * (newTime - edit.times.start) / VideoConstants.timelineLength;
       segmentEl.style.width = `${widthPercent}%`;
@@ -253,6 +277,8 @@ export default function Timeline(props: Props) {
     } else if (name === "end") {
       times = { ...edit.times, end: tempTime.current };
     }
+
+    minStartTime.current = -1;
 
     props.onUpdate({ ...edit, times });
   }
@@ -292,8 +318,11 @@ export default function Timeline(props: Props) {
   }
 
   function nextEditAfterStart(start: number) {
-    const sortedEdits = edits.sort((a: any, b: any) => a.times.start - b.times.start)
-    return sortedEdits.find((e) => e.times.start > start)
+    return sortEdits().find(e => e.times.start > start)
+  }
+
+  function sortEdits() {
+    return edits.sort((a: any, b: any) => a.times.start - b.times.start)
   }
 
   return (

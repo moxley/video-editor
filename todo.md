@@ -78,7 +78,10 @@
   - [x] Fix missing command on split segment, left side
   - [x] Fix null end time for split segment, right side
   - [x] Hover state for "add" button
-- [ ] Prevent overlapping edits
+- [x] Prevent overlapping edits
+  - [x] Prevent start time happening before left event end time
+  - [x] Prevent end time happening before right event start time
 - [ ] Show playhead at time=0
 - [ ] Hide "add" button when playhead is same as edit start
+- [ ] Improve hover state styling of edit segment
 - [ ] Fix ghost affect when dragging
