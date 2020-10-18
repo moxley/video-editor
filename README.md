@@ -14,7 +14,7 @@ npm install
 If you get errors in the output that include `gyp: No Xcode or CLT version detected!`, try running
 `npm install` again.
 
-Run the the frontend application execute the following:
+Run the the frontend application by executing the following:
 
 ```
 npm start
@@ -24,16 +24,15 @@ Then open a browser to http://localhost:8080/
 
 ## Edit Points Format
 
-An edit point is an object that includes the fields "command", "time", and "arguments".
-The edit points format for a video consists of a list of edit points.
+In this application, an edit point is a JSON object that includes the fields `command`, `time`, and `arguments`.
 
-The "command" and "arguments" pattern is well-established. It is seen in programming languages
-and operating shell commands. The "times" field is appropriate for time-based media.
+The "command and arguments" pattern is well-established. It is used in programming languages
+and operating shell commands. The edit point's `times` field is appropriate for time-based media.
 
-The edit points list will be wrapped inside a key-value data structure (e.g., a JSON object), so that
-metadata can be added to the format outsides of the edit points.
+For sending the edits points to the backend, I would wrap them inside an object, so that
+metadata can be added.
 
-JSON will be chosen for the data encoding. It is widely supported by popular databases, frontend
+JSON is the chosen format data encoding. It is widely supported by popular databases, frontend
 APIs and backend APIs. YAML and TOML have better features for hand-coding,
 but hand-coding isn't something that is
 needed in this architecture. JSON can be hand-coded too. BSON is used to solve data exchange
@@ -79,14 +78,16 @@ between components.
 
 ## What I Learned
 
-I'd never built software that worked with videos before, so that was new. I had built an image editor using
+I'd never built software that worked with videos before, so that was new. Most of what I learned was the `<video>` DOM API. I had built an image editor using
 similar technologies. That experience proved to be helpful.
+
+The web frontend hasn't been a primary skill used in my day job since 2011. However, I started learning React starting around 2016, and I used it extensively in a side project from 2018 to the present. Part of that experience included learning Typescript. During that time, I learned enough NPM, Webpack and Babel to get the job done, but I still don't feel confident with those technologies.
 
 ## Decisions
 
 The 145 second value required for the timeline bar was a bit of a problem. It wasn't clear whether that value was chosen to keep the assignment
 simple, or if it was supposed to be a product requirement. I assumed the latter, becuase the value didn't make the assignment more simple.
-The video I tested with was less than 145 seconds, so the active area was much narrower than the bar itself.
+The video I tested with was less than 145 seconds, so the area representing the video timeline was much narrower than the bar itself.
 The result was a little awkward.
 
 ## Additional Thoughts
