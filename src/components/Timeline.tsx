@@ -110,28 +110,6 @@ export default function Timeline(props: Props) {
     listenerSetRef.current = true
   }
 
-  function playHeadIndicator() {
-    if (videoState.playHead === null) return null
-    const percent = (videoState.playHead / VideoConstants.timelineLength) * 100
-
-    return (
-      <div style={{position: "relative", left: `${percent}%`, width: "40px", height: "100%"}}>
-        <PlayHeadDragSurface>
-          <div
-            style={{
-              height: "100%",
-              backgroundColor: "#faa",
-              position: "absolute",
-              width: "2px",
-              top: "1px",
-            }}
-          />
-        </PlayHeadDragSurface>
-        <AddButton src="/images/add-btn.svg" onClick={onAdd} />
-      </div>
-    )
-  }
-
   function onAdd(ev: any) {
     ev.preventDefault();
     ev.stopPropagation();
@@ -176,43 +154,6 @@ export default function Timeline(props: Props) {
     e.preventDefault();
     e.stopPropagation();
     props.onEdit(edit)
-  }
-
-  function SingleEdit(p: any) {
-    const { edit } = p;
-    const { times } = edit
-    if (times.start === null) return null
-
-    const startPercent = (times.start / VideoConstants.timelineLength) * 100
-    const widthPercent = ((times.end - times.start) / VideoConstants.timelineLength) * 100;
-
-    return (
-      <>
-        <EditSegment
-          style={{left: `${startPercent}%`, width: `${widthPercent}%`}}
-          active={edit.id === activeEditId}
-          onClick={e => onEdit(e, edit)}
-        >
-          <CommandIcon src={`/images/${edit.command}-icon.svg`} />
-          <DragGrip
-            src="/images/drag-grip.png"
-            style={{left: 0}}
-            onDragStart={e => onDragStart(e, edit, "start")}
-            onDrag={e => onDrag(e, edit, "start")}
-            onDragEnd={e => onDragEnd(e, edit, "start")}
-            draggable
-          />
-          <DragGrip
-            src="/images/drag-grip.png"
-            style={{left: "100%", marginLeft: "-11px"}}
-            onDragStart={e => onDragStart(e, edit, "end")}
-            onDrag={e => onDrag(e, edit, "end")}
-            onDragEnd={e => onDragEnd(e, edit, "end")}
-            draggable
-          />
-        </EditSegment>
-      </>
-    )
   }
 
   const tempTime = useRef(-1 as number);
@@ -332,6 +273,65 @@ export default function Timeline(props: Props) {
 
   function sortEdits() {
     return edits.sort((a: any, b: any) => a.times.start - b.times.start)
+  }
+
+  function playHeadIndicator() {
+    if (videoState.playHead === null) return null
+    const percent = (videoState.playHead / VideoConstants.timelineLength) * 100
+
+    return (
+      <div style={{position: "relative", left: `${percent}%`, width: "40px", height: "100%"}}>
+        <PlayHeadDragSurface>
+          <div
+            style={{
+              height: "100%",
+              backgroundColor: "#faa",
+              position: "absolute",
+              width: "2px",
+              top: "1px",
+            }}
+          />
+        </PlayHeadDragSurface>
+        <AddButton src="/images/add-btn.svg" onClick={onAdd} />
+      </div>
+    )
+  }
+
+  function SingleEdit(p: any) {
+    const { edit } = p;
+    const { times } = edit
+    if (times.start === null) return null
+
+    const startPercent = (times.start / VideoConstants.timelineLength) * 100
+    const widthPercent = ((times.end - times.start) / VideoConstants.timelineLength) * 100;
+
+    return (
+      <>
+        <EditSegment
+          style={{left: `${startPercent}%`, width: `${widthPercent}%`}}
+          active={edit.id === activeEditId}
+          onClick={e => onEdit(e, edit)}
+        >
+          <CommandIcon src={`/images/${edit.command}-icon.svg`} />
+          <DragGrip
+            src="/images/drag-grip.png"
+            style={{left: 0}}
+            onDragStart={e => onDragStart(e, edit, "start")}
+            onDrag={e => onDrag(e, edit, "start")}
+            onDragEnd={e => onDragEnd(e, edit, "start")}
+            draggable
+          />
+          <DragGrip
+            src="/images/drag-grip.png"
+            style={{left: "100%", marginLeft: "-11px"}}
+            onDragStart={e => onDragStart(e, edit, "end")}
+            onDrag={e => onDrag(e, edit, "end")}
+            onDragEnd={e => onDragEnd(e, edit, "end")}
+            draggable
+          />
+        </EditSegment>
+      </>
+    )
   }
 
   return (
