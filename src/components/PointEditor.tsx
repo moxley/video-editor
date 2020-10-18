@@ -36,6 +36,7 @@ interface Props {
   editPoint: EditPoint;
   onSave: (edit: EditPoint) => void;
   onDelete: (edit: EditPoint) => void;
+  onClose: () => void;
 }
 
 const tabs = [
@@ -43,10 +44,8 @@ const tabs = [
   {name: "cut", label: "Cut"},
 ]
 
-const defaultCommand = "scale";
-
 export default function PointEditor(props: Props) {
-  const { onSave } = props
+  const { onSave, onClose } = props
   const [editPoint, setEditPoint]: [EditPoint, (value: EditPoint) => void] = useState(props.editPoint);
 
   function setCurrentCommand(command: string) {
@@ -82,8 +81,8 @@ export default function PointEditor(props: Props) {
         </TabsBackground>
 
         <div>
-          {editPoint.command === "scale" && <ScaleControl editPoint={editPoint} onSave={onSave} />}
-          {editPoint.command === "cut" && <CutControl editPoint={editPoint} onSave={onSave} />}
+          {editPoint.command === "scale" && <ScaleControl editPoint={editPoint} onSave={onSave} onClose={onClose} />}
+          {editPoint.command === "cut" && <CutControl editPoint={editPoint} onSave={onSave} onClose={onClose} />}
         </div>
       </div>
     </>

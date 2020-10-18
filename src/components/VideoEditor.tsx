@@ -42,7 +42,7 @@ export default function VideoEditor() {
     })
   }
 
-  function onUpdate(edit: EditPoint) {
+  function onUpdate(edit: EditPoint, shouldClose?: boolean) {
     let updatedEdits
 
     if (edit.id) {
@@ -57,7 +57,9 @@ export default function VideoEditor() {
 
     setVideoCurrentTime(edit)
     setEdits(updatedEdits)
-    setEditPoint(null)
+    if (shouldClose) {
+      setEditPoint(null)
+    }
   }
 
   function onEdit(edit: EditPoint) {
@@ -149,7 +151,7 @@ export default function VideoEditor() {
         videoLoaded={videoState.loaded}
       />
 
-      {editPoint && <PointEditor editPoint={editPoint} onSave={onUpdate} onDelete={onDelete} />}
+      {editPoint && <PointEditor editPoint={editPoint} onSave={onUpdate} onClose={() => setEditPoint(null)} onDelete={onDelete} />}
 
       <div style={{marginTop: "1em"}}>
         <div>

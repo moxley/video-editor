@@ -5,6 +5,7 @@ import { EditPoint } from "../types/video";
 interface Props {
   editPoint: EditPoint;
   onSave: (value: EditPoint) => void;
+  onClose: () => void;
 }
 
 export default function CutControl(props: Props) {
@@ -16,10 +17,12 @@ export default function CutControl(props: Props) {
 
   return (
     <ControlWrapper>
+      <div>
+        <button onClick={props.onClose}>Close</button>
+      </div>
       ID: {editPoint.id}<br />
       Start: {editPoint.times.start}<br />
       End: {editPoint.times.end}<br />
-      <button onClick={onSave}>Apply</button>
     </ControlWrapper>
   );
 }

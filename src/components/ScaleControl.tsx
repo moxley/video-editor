@@ -4,26 +4,22 @@ import ControlWrapper from "./ControlWrapper";
 
 interface Props {
   editPoint: EditPoint;
-  onSave?: (edit: EditPoint) => void
+  onSave: (edit: EditPoint) => void
+  onClose: () => void;
 }
 
 export default function ScaleControl(props: Props) {
-  const [editPoint, setEditPoint]: [EditPoint, (value: EditPoint) => void] = useState(props.editPoint);
+  const { editPoint } = props;
 
-  function applyChanges() {
-    const video = document.getElementById("video") as any
-
-    const currentTime = video.currentTime
+  function applyChanges(editPoint: EditPoint) {
     const amount = parseInt(editPoint.arguments.amount);
-    const origTimes = editPoint.times;
     const updatedEdit: EditPoint = {
       ...editPoint,
       command: "scale",
-      times: { ...origTimes, start: currentTime },
       arguments: { amount },
     }
 
-    props.onSave && props.onSave(updatedEdit)
+    props.onSave(updatedEdit)
   }
 
   function percentRadio(value: string) {
@@ -36,13 +32,14 @@ export default function ScaleControl(props: Props) {
   }
 
   function onPercentChange(ev: any) {
-    const newEditPoint = { ...editPoint, arguments: { ...editPoint.arguments, amount: ev.target.value }};
-    console.log("newEditPoint", newEditPoint);
-    setEditPoint(newEditPoint)
+    applyChanges({ ...editPoint, arguments: { ...editPoint.arguments, amount: ev.target.value }});
   }
 
   return (
     <ControlWrapper id="scale-control">
+      <div>
+        <button onClick={props.onClose}>Close</button>
+      </div>
       ID: {editPoint.id}<br />
       Start: {editPoint.times.start}<br />
       End: {editPoint.times.end}<br />
@@ -50,10 +47,6 @@ export default function ScaleControl(props: Props) {
         {percentRadio("50")}
         {percentRadio("100")}
         {percentRadio("150")}
-
-        <button className="apply" onClick={applyChanges}>
-          Apply
-        </button>
       </div>
     </ControlWrapper>
   )
