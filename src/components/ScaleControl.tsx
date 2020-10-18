@@ -29,9 +29,10 @@ export default function ScaleControl(props: Props) {
 
   function percentRadio(value: string) {
     const percent = `${editPoint.arguments.amount}`;
+    const checked = value === percent;
     
     return <>
-      <input type="radio" name="amount" value={value} id={`scale-${value}-percent`} defaultChecked={value === percent} onChange={onPercentChange} />
+      <input type="radio" name="amount" value={value} id={`scale-${value}-percent`} checked={checked} onChange={onPercentChange} />
       <label htmlFor={`scale-${value}-percent`}>{value}%</label>
     </>
   }

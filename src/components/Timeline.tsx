@@ -134,13 +134,6 @@ export default function Timeline(props: Props) {
     }
   }
 
-  function onSplitEdit(ev: any, edit: EditPoint) {
-    const times = calculateTimes(ev);
-    const newEdit = { ...VideoConstants.initialEditPoint, times };
-    const updatedEdit = { ...edit, times: { ...edit.times, end: times.start }}
-    props.onSplit(updatedEdit, newEdit);
-  }
-
   function onSetCurrentTime(ev: any) {
     const bgBar = backgroundBarRef.current;
     const x = ev.pageX - offset;
