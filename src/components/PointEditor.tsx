@@ -36,6 +36,24 @@ const TabsBackground = styled.div`
   border-radius: 5px 5px 0 0;
 `;
 
+const Trash = styled.div`
+  display: inline-block;
+  width: 48px;
+  padding: 0 8px;
+  margin-right: 8px;
+  &:hover > img {
+    cursor: pointer;
+    opacity: 1.0;
+  }
+`;
+
+const TrashIcon = styled.img`
+  width: 20px;
+  opacity: 0.5;
+  display: inline-block;
+  margin: 0 8px -2px 8px;
+`;
+
 interface Props {
   editPoint: EditPoint;
   onSave: (edit: EditPoint) => void;
@@ -77,14 +95,11 @@ export default function PointEditor(props: Props) {
 
   return (
     <div style={{position: "absolute", left: `${left}px`, width: `${width}px`}}>
-      <div style={{marginBottom: "1em"}}>
-        <div>
-          <button onClick={() => props.onDelete(editPoint)}>Remove edit</button>
-        </div>
-      </div>
-
       <Editor>
         <TabsBackground>
+          <Trash onClick={() => props.onDelete(editPoint)}>
+            <TrashIcon src="/images/trash-icon.svg" />
+          </Trash>
           {tabs.map(tab)}
         </TabsBackground>
 

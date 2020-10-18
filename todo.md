@@ -89,5 +89,8 @@
 - [x] Switch command without needing to apply changes
   - [x] Scale setting is set immediately
   - [x] Switching tabs switches command
+- [x] Better UX for "remove" button
+- [ ] Add "close" icon button
+- [ ] Move playhead when resizing segment
 - [ ] Improve hover state styling of edit segment
 - [ ] Fix ghost affect when dragging
