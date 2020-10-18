@@ -73,6 +73,6 @@
 - [ ] Edit by clicking on edit segment
   - [x] Reduce height of edit segments
   - [x] Clicking above segment changes the play point
-  - [ ] Button attached to play point creates new edit
+  - [x] Button attached to play point creates new edit
   - [ ] Clicking on segment goes into edit mode
 - [ ] Fix ghost affect when dragging

@@ -49,18 +49,14 @@ const EditClickControl = styled.div`
   border-width: 1px 1px 0 0;
   padding: 0.25em 0.5em;
   border-radius: 0 5px 0 0;
-  &:hover {
-    cursor: pointer;
-  }
+  &:hover { cursor: pointer; }
 `;
 
 const DragGrip = styled.img`
   position: absolute;
   top: calc(50% - 9px);
   left: 0;
-  &:hover {
-    cursor: pointer;
-  }
+  &:hover { cursor: pointer; }
 `;
 
 const CommandIcon = styled.img`
@@ -72,6 +68,14 @@ const CommandIcon = styled.img`
   &:hover {
     opacity: 0.80;
   }
+`;
+
+const AddButton = styled.img`
+  position: absolute;
+  top: 0;
+  margin: 0.25em 0 0 0.25em;
+  width: 16px;
+  &:hover { cursor: pointer; }
 `;
 
 interface Props {
@@ -113,17 +117,40 @@ export default function Timeline(props: Props) {
     const percent = (videoState.playHead / VideoConstants.timelineLength) * 100
 
     return (
-      <div
-        style={{
-          height: "100%",
-          backgroundColor: "#faa",
-          position: "relative",
-          width: "2px",
-          top: "1px",
-          left: `${percent}%`,
-        }}
-      ></div>
+      <div style={{position: "relative", left: `${percent}%`, height: "100%"}}>
+        <div
+          style={{
+            height: "100%",
+            backgroundColor: "#faa",
+            position: "absolute",
+            width: "2px",
+            top: "1px",
+          }}
+        />
+        <AddButton src="/images/add-btn.svg" onClick={onAdd} />
+      </div>
     )
+  }
+
+  function onAdd(ev: any) {
+    ev.preventDefault();
+    ev.stopPropagation();
+    const time = videoState.playHead;
+    const matchingEdit = edits.find(({ times }: EditPoint) => times.start >= time && times.end <= time)
+    const nextSegment = nextEditAfterStart(time);
+    const nextStart = nextSegment && nextSegment.times.start || null;
+    if (matchingEdit) {
+      const times = { start: time, end: nextStart }
+      const newEdit = { ...VideoConstants.initialEditPoint, times };
+      const updatedEdit = { ...matchingEdit, times: { ...matchingEdit.times, end: times.start }}
+      props.onSplit(updatedEdit, newEdit);
+    } else {
+      const videoEl = videoRef.current;
+      const end = nextStart || videoEl.duration;
+      const times = { start: time, end }
+      const newEdit = { ...VideoConstants.initialEditPoint, times };
+      props.newEdit(newEdit);
+    }
   }
 
   function onSplitEdit(ev: any, edit: EditPoint) {
@@ -262,11 +289,15 @@ export default function Timeline(props: Props) {
   function calculateTimes(ev: any) {
     const x = ev.clientX - offset;
     const start = x / backgroundBarRef.current.clientWidth * VideoConstants.timelineLength;
-    const sortedEdits = edits.sort((a: any, b: any) => a.times.start - b.times.start)
-    const nextEdit = sortedEdits.find((e) => e.times.start > start)
+    const nextEdit = nextEditAfterStart(start)
     const videoLength = videoRef.current.duration;
     const end = nextEdit ? nextEdit.times.start : videoLength;
     return { start, end };
+  }
+
+  function nextEditAfterStart(start: number) {
+    const sortedEdits = edits.sort((a: any, b: any) => a.times.start - b.times.start)
+    return sortedEdits.find((e) => e.times.start > start)
   }
 
   return (
