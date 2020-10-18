@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { EditPoint } from "../types/video"
 import ScaleControl from "./ScaleControl"
 import CutControl from "./CutControl";
-import { hasEndTime } from "../lib/editCommand";
+import VideoConstants from "../lib/VideoConstants";
 
 const rounded = "10px";
 
@@ -41,6 +41,7 @@ interface Props {
   onSave: (edit: EditPoint) => void;
   onDelete: (edit: EditPoint) => void;
   onClose: () => void;
+  containerRef: React.RefObject<HTMLElement>;
 }
 
 const tabs = [
@@ -49,7 +50,7 @@ const tabs = [
 ]
 
 export default function PointEditor(props: Props) {
-  const { editPoint, onSave, onClose } = props
+  const { editPoint, onSave, onClose, containerRef } = props
 
   function setCurrentCommand(command: string) {
     onSave({ ...editPoint, command })
@@ -62,17 +63,21 @@ export default function PointEditor(props: Props) {
            </Tab>
   }
 
+  const { start, end } = editPoint.times;
+  const timelineWidth = containerRef.current.clientWidth;
+  const startX = (start / VideoConstants.timelineLength) * timelineWidth;
+  const endX = (end / VideoConstants.timelineLength) * timelineWidth;
+  const centerOffset = (endX - startX) / 2;
+  const centerX = startX + centerOffset;
+  const width = 300;
+  const left = Math.min(
+    Math.max(0, centerX - (width / 2)),
+    timelineWidth - width
+  );
+
   return (
-    <>
+    <div style={{position: "absolute", left: `${left}px`, width: `${width}px`}}>
       <div style={{marginBottom: "1em"}}>
-        Start: {editPoint.times.start}
-        <br />
-        {hasEndTime(editPoint) && (
-          <>
-            End: {editPoint.times.end}
-            <br />
-          </>
-        )}
         <div>
           <button onClick={() => props.onDelete(editPoint)}>Remove edit</button>
         </div>
@@ -88,6 +93,6 @@ export default function PointEditor(props: Props) {
           {editPoint.command === "cut" && <CutControl editPoint={editPoint} onSave={onSave} onClose={onClose} />}
         </div>
       </Editor>
-    </>
+    </div>
   )
 }

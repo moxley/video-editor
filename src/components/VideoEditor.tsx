@@ -23,6 +23,7 @@ export default function VideoEditor() {
   const [showEditPointsData, setShowEditPointsData]: [boolean, (value: boolean) => void] = useState(false as boolean);
   const videoInitRef = useRef(false);
   const [editPoint, setEditPoint]: [EditPoint | null, (value: EditPoint | null) => void] = useState(null);
+  const containerRef = useRef(null);
 
   function setVideoRef(videoEl: any) {
     if (!videoEl) return
@@ -124,7 +125,7 @@ export default function VideoEditor() {
   }
 
   return (
-    <div style={{ maxWidth: "960px" }}>
+    <div style={{ maxWidth: "960px", position: "relative" }} ref={containerRef}>
       <video
         controls
         id="video"
@@ -151,9 +152,15 @@ export default function VideoEditor() {
         videoLoaded={videoState.loaded}
       />
 
-      {editPoint && <PointEditor editPoint={editPoint} onSave={onUpdate} onClose={() => setEditPoint(null)} onDelete={onDelete} />}
+      {editPoint &&
+        <PointEditor
+          editPoint={editPoint}
+          onSave={onUpdate}
+          onClose={() => setEditPoint(null)} onDelete={onDelete}
+          containerRef={containerRef}
+        />}
 
-      <div style={{marginTop: "1em"}}>
+      <div style={{marginTop: "20em"}}>
         <div>
           <button onClick={() => setShowEditPointsData(!showEditPointsData)}>{showEditPointsData ? "Hide" : "Show"} edit points data</button>
         </div>
