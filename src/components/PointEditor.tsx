@@ -41,17 +41,31 @@ const Trash = styled.div`
   width: 48px;
   padding: 0 8px;
   margin-right: 8px;
+  &:hover { cursor: pointer; }
+  & > img { opacity: 0.5; }
   &:hover > img {
-    cursor: pointer;
     opacity: 1.0;
   }
 `;
 
 const TrashIcon = styled.img`
   width: 20px;
-  opacity: 0.5;
   display: inline-block;
   margin: 0 8px -4px 8px;
+`;
+
+const CloseButton = styled.div`
+  position: absolute;
+  padding: 2px 8px;
+  img { opacity: 0.5; }
+  &:hover { cursor: pointer; }
+  &:hover > img {
+    opacity: 1.0;
+  }
+`;
+
+const CloseIcon = styled.img`
+  width: 16px;
 `;
 
 interface Props {
@@ -104,9 +118,12 @@ export default function PointEditor(props: Props) {
         </TabsBackground>
 
         <div>
-          {editPoint.command === "scale" && <ScaleControl editPoint={editPoint} onSave={onSave} onClose={onClose} />}
-          {editPoint.command === "cut" && <CutControl editPoint={editPoint} onSave={onSave} onClose={onClose} />}
+          {editPoint.command === "scale" && <ScaleControl editPoint={editPoint} onSave={onSave} />}
+          {editPoint.command === "cut" && <CutControl editPoint={editPoint} onSave={onSave} />}
         </div>
+        <CloseButton style={{right: 0, top: "5px"}} onClick={onClose}>
+          <CloseIcon src="/images/close-icon.svg" />
+        </CloseButton>
       </Editor>
     </div>
   )

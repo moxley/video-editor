@@ -90,7 +90,7 @@
   - [x] Scale setting is set immediately
   - [x] Switching tabs switches command
 - [x] Better UX for "remove" button
-- [ ] Add "close" icon button
+- [x] Add "close" icon button
 - [ ] Add command icons to tabs
 - [ ] Move playhead when resizing segment
 - [ ] Improve hover state styling of edit segment

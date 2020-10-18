@@ -5,7 +5,6 @@ import ControlWrapper from "./ControlWrapper";
 interface Props {
   editPoint: EditPoint;
   onSave: (edit: EditPoint) => void
-  onClose: () => void;
 }
 
 export default function ScaleControl(props: Props) {
@@ -37,9 +36,6 @@ export default function ScaleControl(props: Props) {
 
   return (
     <ControlWrapper id="scale-control">
-      <div>
-        <button onClick={props.onClose}>Close</button>
-      </div>
       Start: {editPoint.times.start}<br />
       End: {editPoint.times.end}<br />
       <div className="radio-group">
