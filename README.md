@@ -80,7 +80,7 @@ between components.
 ## What I Learned
 
 I'd never built software that worked with videos before, so that was new. I had built an image editor using
-similar technologies. That came in handy.
+similar technologies. That experience proved to be helpful.
 
 ## Decisions
 
