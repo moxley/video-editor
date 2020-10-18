@@ -93,7 +93,8 @@
 - [x] Add "close" icon button
 - [x] Add command icons to tabs
 - [x] Style settings content
-- [ ] Set playhead to second segment in split
+- [x] Set playhead to second segment in split
+- [ ] Fix selected radio button. Match editPoint.
 - [ ] Move playhead when resizing segment
 - [ ] Improve hover state styling of edit segment
 - [ ] Fix ghost affect when dragging

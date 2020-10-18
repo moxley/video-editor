@@ -340,8 +340,12 @@ export default function Timeline(props: Props) {
   }
 
   return (
-    <BarBackground ref={backgroundBarRef} onClick={onSetCurrentTime}>
-      <Bar ref={barRef} style={{width: videoBarWidth(), position: "absolute", top: 0}} />
+    <BarBackground ref={backgroundBarRef}>
+      <Bar
+        ref={barRef}
+        style={{width: videoBarWidth(), position: "absolute", top: 0}}
+        onClick={onSetCurrentTime}
+      />
       {playHeadIndicator()}
       {editsRendered()}
     </BarBackground>

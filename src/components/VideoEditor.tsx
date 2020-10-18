@@ -87,8 +87,10 @@ export default function VideoEditor() {
       e.id === updatedEdit.id ? updatedEdit : e
     ))
     const id = guid();
-    updatedEdits = [ ...updatedEdits, { ...newEdit, id }]
+    newEdit = { ...newEdit, id };
+    updatedEdits = [ ...updatedEdits, newEdit]
     setEdits(updatedEdits);
+    setEditPoint(newEdit);
   }
 
   function onNewCurrentTime(time: number) {
