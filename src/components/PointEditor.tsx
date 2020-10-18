@@ -10,7 +10,7 @@ const rounded = "10px";
 const Tab = styled.div`
   display: inline-block;
   padding: 0.25em 1em;
-  border-radius: ${rounded} ${rounded} 0px 2px;
+  border-radius: ${rounded} ${rounded} 0px 0px;
   background-color: #ddd;
   &:hover {
     cursor: default;
