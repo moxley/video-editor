@@ -38,6 +38,9 @@ const EditSegment = styled.div<{ active?: boolean }>`
   position: absolute;
   bottom: 0;
   box-sizing: border-box;
+  &:hover {
+    img { opacity: 0.50; }
+  }
 `;
 
 const EditClickControl = styled.div`
@@ -65,9 +68,7 @@ const CommandIcon = styled.img`
   top: calc(50% - 10px);
   width: 20px;
   opacity: 0.25;
-  &:hover {
-    opacity: 0.80;
-  }
+  &:hover { opacity: 0.80; }
 `;
 
 const AddButton = styled.img`
@@ -187,8 +188,9 @@ export default function Timeline(props: Props) {
         <EditSegment
           style={{left: `${startPercent}%`, width: `${widthPercent}%`}}
           active={edit.id === activeEditId}
+          onClick={e => onEdit(e, edit)}
         >
-          <CommandIcon src={`/images/${edit.command}-icon.svg`} onClick={e => onEdit(e, edit)} />
+          <CommandIcon src={`/images/${edit.command}-icon.svg`} />
           <DragGrip
             src="/images/drag-grip.png"
             style={{left: 0}}

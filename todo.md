@@ -74,5 +74,7 @@
   - [x] Reduce height of edit segments
   - [x] Clicking above segment changes the play point
   - [x] Button attached to play point creates new edit
-  - [ ] Clicking on segment goes into edit mode
+  - [x] Clicking on segment goes into edit mode
+  - [ ] Fix missing command on split segment, left side
+  - [ ] Hover state for "add" button
 - [ ] Fix ghost affect when dragging
