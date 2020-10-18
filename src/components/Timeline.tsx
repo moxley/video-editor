@@ -137,16 +137,20 @@ export default function Timeline(props: Props) {
     ev.preventDefault();
     ev.stopPropagation();
     const time = videoState.playHead;
-    const matchingEdit = edits.find(({ times }: EditPoint) => times.start >= time && times.end <= time)
+    const matchingEdit = edits.find(({ times }: EditPoint) => {
+      const afterStart = time >= times.start;
+      const beforeEnd = time <= times.end;
+      return afterStart && beforeEnd
+    })
     const nextSegment = nextEditAfterStart(time);
     const nextStart = nextSegment && nextSegment.times.start || null;
+    const videoEl = videoRef.current;
     if (matchingEdit) {
-      const times = { start: time, end: nextStart }
+      const times = { start: time, end: nextStart || videoEl.duration }
       const newEdit = { ...VideoConstants.initialEditPoint, times };
-      const updatedEdit = { ...matchingEdit, times: { ...matchingEdit.times, end: times.start }}
+      const updatedEdit = { ...matchingEdit, times: { ...matchingEdit.times, end: time }}
       props.onSplit(updatedEdit, newEdit);
     } else {
-      const videoEl = videoRef.current;
       const end = nextStart || videoEl.duration;
       const times = { start: time, end }
       const newEdit = { ...VideoConstants.initialEditPoint, times };

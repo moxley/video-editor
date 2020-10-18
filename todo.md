@@ -75,6 +75,10 @@
   - [x] Clicking above segment changes the play point
   - [x] Button attached to play point creates new edit
   - [x] Clicking on segment goes into edit mode
-  - [ ] Fix missing command on split segment, left side
+  - [x] Fix missing command on split segment, left side
+  - [ ] Fix null end time for split segment, right side
   - [ ] Hover state for "add" button
+- [ ] Prevent overlapping edits
+- [ ] Show playhead at time=0
+- [ ] Hide "add" button when playhead is same as edit start
 - [ ] Fix ghost affect when dragging
