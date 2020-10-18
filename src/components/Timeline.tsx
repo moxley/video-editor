@@ -275,6 +275,12 @@ export default function Timeline(props: Props) {
     return edits.sort((a: any, b: any) => a.times.start - b.times.start)
   }
 
+  function canAddCommandAtPlayHead() {
+    const current = videoState.playHead;
+    const times = edits.map(({times: {start, end}}) => [start, end]).flat()
+    return !times.includes(current);
+  }
+
   function playHeadIndicator() {
     if (videoState.playHead === null) return null
     const percent = (videoState.playHead / VideoConstants.timelineLength) * 100
@@ -292,7 +298,7 @@ export default function Timeline(props: Props) {
             }}
           />
         </PlayHeadDragSurface>
-        <AddButton src="/images/add-btn.svg" onClick={onAdd} />
+        {canAddCommandAtPlayHead() && <AddButton src="/images/add-btn.svg" onClick={onAdd} />}
       </div>
     )
   }

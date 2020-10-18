@@ -85,6 +85,6 @@
 - [x] Allow dragging playhead
   - [x] Invisible grip surface
   - [x] Make timeline taller
-- [ ] Hide "add" button when playhead is same as edit start
+- [x] Hide "add" button when playhead is same as edit start
 - [ ] Improve hover state styling of edit segment
 - [ ] Fix ghost affect when dragging
