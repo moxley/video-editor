@@ -85,9 +85,7 @@ interface Props {
 export default function Timeline(props: Props) {
   const { activeEditId, videoLoaded, videoRef, edits } = props
   const listenerSetRef = useRef(false)
-  const [videoState, setVideoState] = useState({
-    playHead: null,
-  })
+  const [videoState, setVideoState] = useState({ playHead: 0 })
   const [hovering, setHovering]: [boolean, (value: boolean) => void] = useState(false as boolean);
   const pointerRef = useRef(null);
   // TODO Why offset -10?
@@ -104,7 +102,7 @@ export default function Timeline(props: Props) {
   }
 
   function playHeadIndicator() {
-    if (!videoState.playHead) return null
+    if (videoState.playHead === null) return null
     const percent = (videoState.playHead / VideoConstants.timelineLength) * 100
 
     return (

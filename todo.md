@@ -81,7 +81,8 @@
 - [x] Prevent overlapping edits
   - [x] Prevent start time happening before left event end time
   - [x] Prevent end time happening before right event start time
-- [ ] Show playhead at time=0
+- [x] Show playhead at time=0
+- [ ] Allow dragging playhead
 - [ ] Hide "add" button when playhead is same as edit start
 - [ ] Improve hover state styling of edit segment
 - [ ] Fix ghost affect when dragging
