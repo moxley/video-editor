@@ -1,6 +1,7 @@
 import React from "react";
 import ControlWrapper from "./ControlWrapper";
 import { EditPoint } from "../types/video";
+import PointTimes from "./PointTimes";
 
 interface Props {
   editPoint: EditPoint;
@@ -16,8 +17,7 @@ export default function CutControl(props: Props) {
 
   return (
     <ControlWrapper>
-      Start: {editPoint.times.start}<br />
-      End: {editPoint.times.end}<br />
+      <PointTimes editPoint={editPoint} />
     </ControlWrapper>
   );
 }

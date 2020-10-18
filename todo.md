@@ -92,7 +92,8 @@
 - [x] Better UX for "remove" button
 - [x] Add "close" icon button
 - [x] Add command icons to tabs
-- [ ] Style settings content
+- [x] Style settings content
+- [ ] Set playhead to second segment in split
 - [ ] Move playhead when resizing segment
 - [ ] Improve hover state styling of edit segment
 - [ ] Fix ghost affect when dragging

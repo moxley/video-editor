@@ -1,6 +1,12 @@
-import React, { useState } from "react"
+import React from "react"
 import { EditPoint } from "../types/video"
 import ControlWrapper from "./ControlWrapper";
+import { default as PointTimesOrig } from "./PointTimes";
+import styled from "styled-components";
+
+const PointTimes = styled(PointTimesOrig)`
+  margin-bottom: 1em;
+`;
 
 interface Props {
   editPoint: EditPoint;
@@ -36,8 +42,8 @@ export default function ScaleControl(props: Props) {
 
   return (
     <ControlWrapper id="scale-control">
-      Start: {editPoint.times.start}<br />
-      End: {editPoint.times.end}<br />
+      <PointTimes editPoint={editPoint} />
+      <label>Scale amount:</label>
       <div className="radio-group">
         {percentRadio("50")}
         {percentRadio("100")}
