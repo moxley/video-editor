@@ -86,8 +86,8 @@
   - [x] Invisible grip surface
   - [x] Make timeline taller
 - [x] Hide "add" button when playhead is same as edit start
-- [ ] Switch command without needing to apply changes
+- [x] Switch command without needing to apply changes
   - [x] Scale setting is set immediately
-  - [ ] Switching tabs switches command
+  - [x] Switching tabs switches command
 - [ ] Improve hover state styling of edit segment
 - [ ] Fix ghost affect when dragging

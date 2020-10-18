@@ -45,11 +45,10 @@ const tabs = [
 ]
 
 export default function PointEditor(props: Props) {
-  const { onSave, onClose } = props
-  const [editPoint, setEditPoint]: [EditPoint, (value: EditPoint) => void] = useState(props.editPoint);
+  const { editPoint, onSave, onClose } = props
 
   function setCurrentCommand(command: string) {
-    setEditPoint({ ...editPoint, command })
+    onSave({ ...editPoint, command })
   }
 
   function tab(tab: TabData, index: number) {
