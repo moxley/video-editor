@@ -51,7 +51,7 @@ const TrashIcon = styled.img`
   width: 20px;
   opacity: 0.5;
   display: inline-block;
-  margin: 0 8px -2px 8px;
+  margin: 0 8px -4px 8px;
 `;
 
 interface Props {
